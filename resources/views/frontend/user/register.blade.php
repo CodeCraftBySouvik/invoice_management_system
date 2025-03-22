@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <img class="img-fluid mb-5 mb-md-0" src="{{ asset('frontend/img/checkout-success.svg') }}" alt="Image" width="677" height="738" loading="lazy" />
+                <img class="img-fluid mb-5 mb-md-0" src="{{ asset('assets/frontend/checkout-success.svg') }}" alt="Image" width="677" height="738" loading="lazy" />
             </div>
             <div class="col-md-6">
                 <div class="w-350px mx-auto">
@@ -36,15 +36,19 @@
                                             <div class="col-12 form-group">
                                                 <label for="email" class="form-label">Email ID</label>
                                                 <input type="email" class="form-control font-size-sm @error('email') is-invalid @enderror" id="email-1" name="email" placeholder="" required="" value="{{ old('email') }}">
-                                                <!-- @include('includes.utils.field-validation', ['field' => 'email', 'message' => 'Please enter a valid email ID']) -->
-                                                 @error('email')  <p class="text-danger">{{$message}}</p> @enderror
+                                                {{-- <!-- @include('includes.utils.field-validation', ['field' => 'email', 'message' => 'Please enter a valid email ID']) --> --}}
+                                                 @error('email')  
+                                                   <p class="text-danger">{{$message}}</p> 
+                                                @enderror
                                             </div>
 
                                             <div class="col-12 form-group">
                                                 <label for="password" class="form-label">Password</label>
                                                 <input type="password" class="form-control font-size-sm @error('password') is-invalid @enderror" id="password" name="password" placeholder="" required="" value="{{ old('password') }}">
-                                                <!-- @include('includes.utils.field-validation', ['field' => 'password', 'message' => 'Please enter your password']) -->
-                                                @error('password')  <p class="text-danger">{{$message}}</p> @enderror
+                                                {{-- <!-- @include('includes.utils.field-validation', ['field' => 'password', 'message' => 'Please enter your password']) --> --}}
+                                                @error('password')
+                                                  <p class="text-danger">{{$message}}</p>
+                                                @enderror
 
                                             </div>
 
@@ -64,7 +68,7 @@
                                             <div class="col-12 form-group">
                                                 <label for="mobile" class="form-label">Phone Number</label>
                                                 <input type="tel" class="form-control font-size-sm @error('mobile') is-invalid @enderror" id="mobile-2" name="mobile" placeholder="" required="" value="{{ old('mobile') }}">
-                                                <!-- @include('includes.utils.field-validation', ['field' => 'mobile', 'message' => 'Please enter a valid phone number']) -->
+                                                {{-- <!-- @include('includes.utils.field-validation', ['field' => 'mobile', 'message' => 'Please enter a valid phone number']) --> --}}
                                                 @error('mobile')  <p class="text-danger">{{$message}}</p> @enderror
                                                 
                                             </div>
@@ -73,7 +77,7 @@
                                                 <label for="password" class="form-label">Password</label>
                                                 <input type="password" class="form-control font-size-sm 
                                                 @error('password') is-invalid @enderror" id="password" name="password" placeholder="" required="" value="{{ old('password') }}">
-                                                <!-- @include('includes.utils.field-validation', ['field' => 'password', 'message' => 'Please enter your password']) -->
+                                                {{-- <!-- @include('includes.utils.field-validation', ['field' => 'password', 'message' => 'Please enter your password']) --> --}}
                                                 @error('password')  <p class="text-danger">{{$message}}</p> @enderror
                                             </div>
 

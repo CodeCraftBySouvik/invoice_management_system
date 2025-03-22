@@ -12,7 +12,8 @@
             <div class="col-md-6 mx-auto text-center">
                 <h1 class="display-4 fw-regular text-body-emphasis mb-5">Main Banner</h1>
                 <a href="{{ route('register') }}" type="button" class="btn btn-primary-app me-md-1">Signup Now</a>
-                <a href="{{ config('app.demo_url') }}" type="button" class="btn btn-primary-app ms-md-1">Play Demo</a>
+
+                <a href="{{ Auth::check() ? route('free-trial-dashboard') : route('register') }}" type="button" class="btn btn-primary-app ms-md-1">Play Demo</a>
             </div>
         </div>
     </div>

@@ -41,10 +41,10 @@ Route::group(['namespace' => 'app','prefix'=>'app'],function(){
     // Route::get('/setup/step/{id}', 'DatabaseController@setupStep')->name('admin.setup.step');
     // Route::post('/setup/step/submit/{id}', 'DatabaseController@setupStepSubmit')->name('admin.setup.step.submit');
     // Route::get('/setup/dump', 'DatabaseController@setupDump')->name('admin.setup.dump');
-    Route::get('/register', [AdminUserController::class, 'register'])->name('register');
+    // Route::get('/register', [AdminUserController::class, 'register'])->name('register');
 
     // Route::group(['middleware'=>'auth:web'],function(){ //will work more on multiple gaurd
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+        // Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
         // Route::group(['prefix'=>'settings'],function(){
         //     // Route::get('/', [AdminGeneralController::class, 'settings'])->name('admin.settings');
@@ -171,23 +171,23 @@ Route::group(['namespace' => 'app','prefix'=>'app'],function(){
 // For Frontend
 Route::group(['prefix' => ''], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
-    Route::get('/pricing', [HomeController::class, 'pricing'])->name('pricing');
     Route::get('/create-account', [HomeController::class, 'CreateAccount'])->name('create-account');
     Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
     Route::get('/checkout/success', [HomeController::class, 'checkoutSuccess'])->name('checkout-success');
-    Route::get('/setup', [HomeController::class, 'setup'])->name('setup');
+    Route::middleware(['redirect.signup'])->group(function () {
+        Route::get('/setup', [HomeController::class, 'setup'])->name('setup');
+        Route::get('/free-trial-dashboard', [HomeController::class, 'FreeTrialdashboard'])->name('free-trial-dashboard');
+        Route::get('/pricing', [HomeController::class, 'pricing'])->name('pricing');
+    }); 
     Route::post('/setup-submit', [HomeController::class, 'setupSubmit'])->name('setup-submit');
     Route::get('/register', [UserController::class, 'register'])->name('register');
     Route::post('/register/submit', [UserController::class, 'registerSubmit'])->name('register.submit');
+    // Route::get('/logout', [UserController::class, 'logout'])->name('logout');
     Route::get('/login', [UserController::class, 'login'])->name('login');
     Route::post('/login/submit', [UserController::class, 'loginSubmit'])->name('login.submit');
     Route::get('/otp/{token}', [UserController::class, 'otp'])->name('otp');
     Route::post('/resend-otp', [UserController::class, 'resendOtp'])->name('resend-otp');
     Route::post('/otp/submit', [UserController::class, 'otpSubmit'])->name('otp.submit');
-
-
-    // Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
-
 
     Route::get('/self', [UserController::class, 'self'])->name('self'); //dummy
 

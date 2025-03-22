@@ -96,17 +96,21 @@ class HomeController extends Controller
             $data->save();
             DB::commit(); // Commit transaction
     
-            return redirect()->route('admin.dashboard')->with('success', 'Company setup completed!');
+            return redirect()->route('free-trial-dashboard')->with('success', 'Company setup completed!');
         } catch (\Exception $e) {
-            // dd($e->getMessage());
+            dd($e->getMessage());
             DB::rollBack(); // Rollback transaction in case of failure
     
             return redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
     }
 
-    public function dashboard(){
-        
+    public function FreeTrialdashboard(){
+        $page = [
+            'term' => 'Free Trial Dashboard'
+        ];
+
+        return view('admin.free.dashboard',compact('page'));
     }
     
 }

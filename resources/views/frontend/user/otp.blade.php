@@ -18,7 +18,7 @@
                     <div class="h-30px"></div>
                     <h5 class="fw-medium mb-4 text-center">Verify Your Identity</h5>
                     <p class="text-body-emphasis text-center mb-2">We sent a 6 digit code to example@gmail.com, this code will valid for next 5 minutes</p>
-                    <p class="color-primary-app fw-medium text-center text-decoration-underline mb-3 pb-2">Change email ID</p>
+                    <a href="{{route('register')}}" class="text-center color-primary-app fw-medium text-center text-decoration-underline mb-3 pb-2" style="margin-left: 97px;">Change email ID</a>
 
                     <div class="card border-0">
                         <div class="card-body p-0">
@@ -40,7 +40,7 @@
                                 @csrf
                                 <input type="hidden" name="remember_token" value="{{$token}}">
                                 <div class="pt-1 mt-3">
-                                    <button class="btn-submit w-100 btn btn-primary-app font-size-sm disabled resend-btn">Resend Code <span class="timer">(0:10)</span></button>
+                                    <button class="btn-submit w-100 btn btn-primary-app font-size-sm disabled resend-btn">Resend Code <span class="timer">(0:59)</span></button>
                                 </div>
                             </form>
                             <p class="text-center color-gray-app pt-3 m-0">By pressing Continue you agree to <span class="text-black fw-medium">Term of Service and Privacy Policy</span></p>
@@ -58,7 +58,7 @@
 @section('customjs')
 <script type="text/javascript">
     $(document).ready(function() {
-        let time = 10;
+        let time = 59;
 
         let countdown = setInterval(function() {
             let minutes = Math.floor(time / 60);
@@ -69,7 +69,7 @@
             if (time === 0) {
                 clearInterval(countdown);
                 $('.resend-btn').removeClass('disabled').find('.timer').text('');
-                // $('.main-btn').addClass('disabled');
+                $('.main-btn').addClass('disabled');
                 // alert("Time's up!");
             }
 

@@ -46,11 +46,11 @@
                         </div>
                         <div class="col-md-6 form-group">
                             <label for="emirates" class="form-label">Emirates</label>
-                            <select class="form-control form-select" name="emirates" aria-label="Emirates">
+                            <select class="form-control form-select" name="emirates" aria-label="Emirates" value="{{old('emirates')}}">  
                                 <option selected hidden value="">Select Emirates</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                <option value="1" {{old('emirates') == '1' ? 'selected' : ''}}>One</option>
+                                <option value="2"  {{old('emirates') == '2' ? 'selected' : ''}}>Two</option>
+                                <option value="3" {{old('emirates') == '3' ? 'selected' : ''}}>Three</option>
                             </select>
                             @error('emirates')
                             <p class="text-danger">

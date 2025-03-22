@@ -209,7 +209,6 @@ class UserController extends Controller
     public function registerSubmit(Request $request)
     {
         try {
-            // Initialize user object
             $user = new User();
             $otp = rand(100000, 999999); // Generate a 6-digit OTP
             $user->remember_token = Str::random(60);
@@ -293,8 +292,14 @@ class UserController extends Controller
         }
     }
 
-    public function dashboard()
-    {
-        dd('dashboard');
-    }
+    // public function logout()
+    // {
+    //     Auth::logout();
+    //     return redirect()->route('register');
+    // }
+
+    // public function dashboard()
+    // {
+    //     dd('dashboard');
+    // }
 }
