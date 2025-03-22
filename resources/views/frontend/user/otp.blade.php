@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <img class="img-fluid mb-5 mb-md-0" src="{{ asset('frontend/img/checkout-success.svg') }}" alt="Image" width="677" height="738" loading="lazy" />
+                <img class="img-fluid mb-5 mb-md-0" src="{{ asset('/assets/frontend/checkout-success.svg') }}" alt="Image" width="677" height="738" loading="lazy" />
             </div>
             <div class="col-md-6">
                 <div class="w-350px mx-auto">
@@ -28,16 +28,21 @@
                                     <div class="col-12 form-group">
                                         <input type="tel" class="form-control font-size-sm @error('otp') is-invalid @enderror" id="otp" name="otp" placeholder="" required="" value="{{ old('otp') }}">
                                         @include('includes.utils.field-validation', ['field' => 'otp', 'message' => 'Please enter OTP'])
+                                        @error('otp') <p class="text-danger">{{$message}}</p>@enderror
                                     </div>
-
+                                    <input type="hidden" name="remember_token" value="{{$token}}">
                                     <div class="col-12">
                                         <button class="btn-submit w-100 btn btn-primary-app font-size-sm main-btn" type="submit">Continue</button>
                                     </div>
                                 </div>
                             </form>
-                            <div class="pt-1 mt-3">
-                                <button class="btn-submit w-100 btn btn-primary-app font-size-sm disabled resend-btn">Resend Code <span class="timer">(0:10)</span></button>
-                            </div>
+                            <form method="POST" action="{{ route('resend-otp') }}" enctype="multipart/form-data" class="needs-validation" novalidate="">
+                                @csrf
+                                <input type="hidden" name="remember_token" value="{{$token}}">
+                                <div class="pt-1 mt-3">
+                                    <button class="btn-submit w-100 btn btn-primary-app font-size-sm disabled resend-btn">Resend Code <span class="timer">(0:10)</span></button>
+                                </div>
+                            </form>
                             <p class="text-center color-gray-app pt-3 m-0">By pressing Continue you agree to <span class="text-black fw-medium">Term of Service and Privacy Policy</span></p>
                         </div>
                     </div>
@@ -64,7 +69,7 @@
             if (time === 0) {
                 clearInterval(countdown);
                 $('.resend-btn').removeClass('disabled').find('.timer').text('');
-                $('.main-btn').addClass('disabled');
+                // $('.main-btn').addClass('disabled');
                 // alert("Time's up!");
             }
 

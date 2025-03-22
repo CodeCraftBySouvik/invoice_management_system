@@ -176,13 +176,17 @@ Route::group(['prefix' => ''], function () {
     Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
     Route::get('/checkout/success', [HomeController::class, 'checkoutSuccess'])->name('checkout-success');
     Route::get('/setup', [HomeController::class, 'setup'])->name('setup');
-
+    Route::post('/setup-submit', [HomeController::class, 'setupSubmit'])->name('setup-submit');
     Route::get('/register', [UserController::class, 'register'])->name('register');
     Route::post('/register/submit', [UserController::class, 'registerSubmit'])->name('register.submit');
     Route::get('/login', [UserController::class, 'login'])->name('login');
     Route::post('/login/submit', [UserController::class, 'loginSubmit'])->name('login.submit');
-    Route::get('/otp', [UserController::class, 'otp'])->name('otp');
+    Route::get('/otp/{token}', [UserController::class, 'otp'])->name('otp');
+    Route::post('/resend-otp', [UserController::class, 'resendOtp'])->name('resend-otp');
     Route::post('/otp/submit', [UserController::class, 'otpSubmit'])->name('otp.submit');
+
+
+    // Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
 
 
     Route::get('/self', [UserController::class, 'self'])->name('self'); //dummy

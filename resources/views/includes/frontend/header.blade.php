@@ -14,7 +14,7 @@
 
                 <div class="collapse navbar-collapse flex-grow-0" id="navbarMain">
                     <ul class="navbar-nav align-items-md-center">
-                        <li class="nav-item me-md-4"><a href="{{ config('app.main_front_url') }}" class="nav-link @if( Route::is('home')) active @endif" aria-current="page">Home</a></li>
+                        <li class="nav-item me-md-4"><a href="{{ route('home') }}" class="nav-link @if( Route::is('home')) active @endif" aria-current="page">Home</a></li>
                         <li class="nav-item mx-md-4"><a href="{{ config('app.main_front_url') }}/demo" class="nav-link @if( Route::is('home2')) active @endif">Play App Video</a></li>
                         <li class="nav-item mx-md-4"><a href="{{ config('app.main_front_url') }}/pricing" class="nav-link @if( Route::is('pricing')) active @endif">Pricing</a></li>
                         <li class="nav-item mt-2 mt-md-0 ms-md-5 me-md-3"><a href="{{ config('app.main_front_url') }}/login" class="nav-link btn btn-primary-app dark">Upgrade Now</a></li>

@@ -11,7 +11,7 @@
         <div class="row align-items-center min-vh-100">
             <div class="col-md-6 mx-auto text-center">
                 <h1 class="display-4 fw-regular text-body-emphasis mb-5">Main Banner</h1>
-                <a href="{{ config('app.main_front_url') }}/register" type="button" class="btn btn-primary-app me-md-1">Signup Now</a>
+                <a href="{{ route('register') }}" type="button" class="btn btn-primary-app me-md-1">Signup Now</a>
                 <a href="{{ config('app.demo_url') }}" type="button" class="btn btn-primary-app ms-md-1">Play Demo</a>
             </div>
         </div>
