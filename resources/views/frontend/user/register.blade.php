@@ -41,8 +41,8 @@
 
                                             <div class="col-12 form-group">
                                                 <label for="password" class="form-label">Password</label>
-                                                <input type="password" class="form-control font-size-sm @error('password-1') is-invalid @enderror" id="password-1" name="password-1" placeholder="" required="" value="{{ old('password-1') }}">
-                                                @include('includes.utils.field-validation', ['field' => 'password-1', 'message' => 'Please enter your password'])
+                                                <input type="password" class="form-control font-size-sm @error('password') is-invalid @enderror" id="password" name="password" placeholder="" required="" value="{{ old('password') }}">
+                                                @include('includes.utils.field-validation', ['field' => 'password', 'message' => 'Please enter your password'])
                                             </div>
 
                                             <div class="col-12">
@@ -66,8 +66,9 @@
 
                                             <div class="col-12 form-group">
                                                 <label for="password" class="form-label">Password</label>
-                                                <input type="password" class="form-control font-size-sm @error('password-2') is-invalid @enderror" id="password-2" name="password-2" placeholder="" required="" value="{{ old('password-2') }}">
-                                                @include('includes.utils.field-validation', ['field' => 'password-2', 'message' => 'Please enter your password'])
+                                                <input type="password" class="form-control font-size-sm 
+                                                @error('password') is-invalid @enderror" id="password" name="password" placeholder="" required="" value="{{ old('password') }}">
+                                                @include('includes.utils.field-validation', ['field' => 'password', 'message' => 'Please enter your password'])
                                             </div>
 
                                             <div class="col-12">
