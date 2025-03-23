@@ -109,8 +109,9 @@ class HomeController extends Controller
         $page = [
             'term' => 'Free Trial Dashboard'
         ];
-
-        return view('admin.free.dashboard',compact('page'));
+        // fetch the logged in user's company data
+        $userCompanyData = UserCompaniesData::where('user_id', Auth::id())->first();
+        return view('admin.free.dashboard',compact('page','userCompanyData'));
     }
     
 }

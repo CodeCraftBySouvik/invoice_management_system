@@ -8,7 +8,7 @@
 
 <div class="content-wrapper">
     <div class="container-fluid">
-        <form action="" name="add_{{ $page['term'] }}" id="add_{{ $page['term'] }}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate=''>
+        <form action="" name="add_{{ $page['term'] }}" id="add_{{ $page['term'] }}" method="post" enctype="multipart/form-data" class="needs-validation">
             @csrf
             <input type="hidden" name="content_type" value="{{$page['term']}}">
 
@@ -30,7 +30,12 @@
                             <div class="form-control-file d-flex align-items-center justify-content-center w-100">
                                 <span>+ Add Logo</span>
                                 <input type="file" class="form-control font-size-sm" id="company_logo" name="company_logo" placeholder="">
-                                <img class="file-preview" src='' alt='preview' loading='lazy' style='display:none;z-index:1;'>
+                                @if (!empty($userCompanyData && $userCompanyData->logo))
+                                    <img class="file-preview" src='{{ asset('storage/'.$userCompanyData->logo) }}' alt='preview' loading='lazy' style='display:block;z-index:1;'>
+                                @else
+                                    <img class="file-preview" src='' alt='preview' loading='lazy' style='display:none;z-index:1;'> 
+                                @endif
+                                {{-- <img class="file-preview" src='' alt='preview' loading='lazy' style='display:none;z-index:1;'> --}}
                             </div>
                             <div class="invalid-feedback">
                                 Please enter a valid company logo.
@@ -55,13 +60,13 @@
                     <div class="col-md-4">
     				    <div class="form-group m-0">
     				        <label>Invoice From</label>
-						    <input type="text" class="form-control" placeholder="" name="invoice_from" value="{{ old('invoice_from') ?? '' }}" required>
+						    <input type="text" class="form-control" placeholder="" name="invoice_from" value="{{ old('invoice_from' , $userCompanyData->company_name ?? '')}}" required>
                         </div>
     				</div>
                     <div class="col-md-4">
     				    <div class="form-group m-0">
     				        <label>Address</label>
-						    <input type="text" class="form-control" placeholder="" name="invoice_from_address" value="{{ old('invoice_from_address') ?? '' }}" required>
+						    <input type="text" class="form-control" placeholder="" name="invoice_from_address" value="{{ old('invoice_from_address' , $userCompanyData->address ?? '')}}" required>
                         </div>
     				</div>
                     <div class="col-md-4">

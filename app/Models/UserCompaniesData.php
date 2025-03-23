@@ -13,4 +13,8 @@ class UserCompaniesData extends Model
     protected $fillable = [
         'company_name', 'address', 'area', 'emirates', 'phone_number',
     ];
+    
+    public function user() {
+        return $this->belongsTo(User::class,'user_id');
+    }
 }
