@@ -202,103 +202,104 @@ class UserController extends Controller
 
     // new scratch code
 
-    public function register()
-    {
-        return view('frontend.user.register');
-    }
+        public function register()
+        {
+            return view('frontend.user.register');
+        }
 
-    public function registerSubmit(Request $request)
-    {
-        try {
-            $user = new User();
-            $otp = rand(100000, 999999); // Generate a 6-digit OTP
-            $user->remember_token = Str::random(60);
+        public function registerSubmit(Request $request)
+        {
+            try {
+                $user = new User();
+                $otp = rand(100000, 999999); // Generate a 6-digit OTP
+                $user->remember_token = Str::random(60);
 
-            if ($request->form_name == 'withMobile') {
-                $request->validate([
-                    'mobile' => 'required|digits:10|unique:users,mobile_number',
-                    'password' => 'required|min:6',
-                ]);
+                if ($request->form_name == 'withMobile') {
+                    $request->validate([
+                        'mobile' => 'required|digits:10|unique:users,mobile_number',
+                        'password' => 'required|min:6',
+                    ]);
 
-                $user->mobile_number = $request->mobile;
-                $user->password = Hash::make($request->password);
-                $user->mobile_otp = $otp; // Store OTP for mobile
-                // dd($otp);
-            } else {
-                $request->validate([
-                    'email' => 'required|email|unique:users,email',
-                    'password' => 'required|min:6',
-                ]);
+                    $user->mobile_number = $request->mobile;
+                    $user->password = Hash::make($request->password);
+                    $user->mobile_otp = $otp; // Store OTP for mobile
+                    // dd($otp);
+                } else {
+                    $request->validate([
+                        'email' => 'required|email|unique:users,email',
+                        'password' => 'required|min:6',
+                    ]);
 
-                $user->email = $request->email;
-                $user->password = Hash::make($request->password);
-                $user->email_otp = $otp; // Store OTP for email
-            }
-
-            $user->save();
-            if ($user) {
-                if ($request->form_name == 'withEmail') {
-                    Mail::to($user->email)->send(new SendRegistrationOTP($otp));
-                    return redirect()->route('otp', ['token' => $user->remember_token])
-                        ->with('success', 'A six-digit OTP has been sent to your mobile.');
-                }else {
-                    $twilio = new TwilioService();
-                    $message = "Your OTP for registration is: $otp";
-                    $twilio->sendSMS($user->mobile_number, $message);
-                    return redirect()->route('otp', ['token' => $user->remember_token])
-                        ->with('success', 'A six-digit OTP has been sent to your mobile.');
+                    $user->email = $request->email;
+                    $user->password = Hash::make($request->password);
+                    $user->email_otp = $otp; // Store OTP for email
                 }
+
+                $user->save();
+                if ($user) {
+                    if ($request->form_name == 'withEmail') {
+                        Mail::to($user->email)->send(new SendRegistrationOTP($otp));
+                        return redirect()->route('otp', ['token' => $user->remember_token])
+                            ->with('success', 'A six-digit OTP has been sent to your mobile.');
+                    }else {
+                        $twilio = new TwilioService();
+                        $message = "Your OTP for registration is: $otp";
+                        $twilio->sendSMS($user->mobile_number, $message);
+                        return redirect()->route('otp', ['token' => $user->remember_token])
+                            ->with('success', 'A six-digit OTP has been sent to your mobile.');
+                    }
+                }
+
+            } catch (\Illuminate\Validation\ValidationException $e) {
+                return redirect()->back()
+                    ->withErrors($e->validator)
+                    ->withInput()
+                    ->with('active_tab', $request->form_name == 'withMobile' ? 'pills-2' : 'pills-1');
             }
-
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return redirect()->back()
-                ->withErrors($e->validator)
-                ->withInput()
-                ->with('active_tab', $request->form_name == 'withMobile' ? 'pills-2' : 'pills-1');
         }
-    }
 
-    public function otp($token)
-    {
-        $page = [
-            'term' => 'OTP'
-        ];
+        public function otp($token)
+        {
+            $page = [
+                'term' => 'OTP'
+            ];
+            $user = User::where('remember_token', $token)->first();
 
-        return view('frontend.user.otp', compact('page', 'token'));
-    }
-
-    public function resendOtp(Request $request)
-    {
-        $remember_token = $request->remember_token;
-        $exist_user = User::where('remember_token', $request->remember_token)->first();
-        $otp = rand(100000, 999999);
-        $exist_user->email_otp = $otp;
-        $exist_user->save();
-        if($exist_user){
-            Mail::to($exist_user->email)->send(new SendRegistrationOTP($otp));
+            return view('frontend.user.otp', compact('page', 'token','user'));
         }
-        return redirect()->route('otp', ['token' => $request->remember_token])->with('success','A six-digit OTP has been sent to your email or mobile.');
 
-    }
-
-    public function otpSubmit(Request $request)
-    {
-        $request->validate([
-            'otp' => 'required|numeric|digits:6'
-        ]);
-
-
-        $exist_user = User::where('remember_token', $request->remember_token)->first();
-        if ($request->otp == $exist_user->email_otp || $request->otp == $exist_user->mobile_otp) {
-            $exist_user->email_verified_at = now();
+        public function resendOtp(Request $request)
+        {
+            $remember_token = $request->remember_token;
+            $exist_user = User::where('remember_token', $request->remember_token)->first();
+            $otp = rand(100000, 999999);
+            $exist_user->email_otp = $otp;
             $exist_user->save();
-            Auth::login($exist_user);
-            return redirect()->route('setup');
-        } else {
-            return redirect()->route('otp', ['token' => $request->remember_token])
-                ->withErrors(['otp' => 'You entered the wrong OTP. Please try again.']);
+            if($exist_user){
+                Mail::to($exist_user->email)->send(new SendRegistrationOTP($otp));
+            }
+            return redirect()->route('otp', ['token' => $request->remember_token])->with('success','A six-digit OTP has been sent to your email.');
+
         }
-    }
+
+        public function otpSubmit(Request $request)
+        {
+            $request->validate([
+                'otp' => 'required|numeric|digits:6'
+            ]);
+
+
+            $exist_user = User::where('remember_token', $request->remember_token)->first();
+            if ($request->otp == $exist_user->email_otp || $request->otp == $exist_user->mobile_otp) {
+                $exist_user->email_verified_at = now();
+                $exist_user->save();
+                Auth::login($exist_user);
+                return redirect()->route('setup')->with('success', 'You have successfully verified your otp.');
+            } else {
+                return redirect()->route('otp', ['token' => $request->remember_token])
+                    ->withErrors(['otp' => 'You entered the wrong OTP. Please try again.']);
+            }
+        }
 
     // public function logout()
     // {

@@ -1,0 +1,17 @@
+/* Success - Green */
+.toast-success {
+    background-color: #28a745 !important; /* Bootstrap Success Green */
+    color: white !important;
+}
+
+/* Error - Red */
+.toast-error {
+    background-color: #dc3545 !important; /* Bootstrap Danger Red */
+    color: white !important;
+}
+
+/* Warning - Yellow */
+.toast-warning {
+    background-color: #ffc107 !important; /* Bootstrap Warning Yellow */
+    color: black !important;
+}

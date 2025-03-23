@@ -16,9 +16,15 @@
             <div class="col-md-6">
                 <div class="w-350px mx-auto">
                     <div class="h-30px"></div>
+                     
                     <h5 class="fw-medium mb-4 text-center">Verify Your Identity</h5>
-                    <p class="text-body-emphasis text-center mb-2">We sent a 6 digit code to example@gmail.com, this code will valid for next 5 minutes</p>
-                    <a href="{{route('register')}}" class="text-center color-primary-app fw-medium text-center text-decoration-underline mb-3 pb-2" style="margin-left: 97px;">Change email ID</a>
+                    @if (isset($user->email))
+                       <p class="text-body-emphasis text-center mb-2">We sent a 6 digit code to {{$user->email}}, this code will valid for next 1 minutes</p>
+                       <a href="{{route('register')}}" class="text-center color-primary-app fw-medium text-center text-decoration-underline mb-3 pb-2" style="margin-left: 97px;">Change email ID</a>
+                    @elseif(isset($user->mobile_number))
+                          <p class="text-body-emphasis text-center mb-2">We sent a 6 digit code to your {{$user->mobile_number}}, this code will valid for next 1 minutes</p>
+                       <a href="{{route('register')}}" class="text-center color-primary-app fw-medium text-center text-decoration-underline mb-3 pb-2" style="margin-left: 97px;">Change mobile number</a>
+                    @endif
 
                     <div class="card border-0">
                         <div class="card-body p-0">
@@ -76,5 +82,8 @@
             time--;
         }, 1000); // Update every second
     });
+
+  
 </script>
+
 @endsection
