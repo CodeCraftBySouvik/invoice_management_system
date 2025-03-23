@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendRegistrationOTP;
+use App\Services\TwilioService;
 
 // use Stripe\Stripe;
 // use Stripe\PaymentIntent;
@@ -222,6 +223,7 @@ class UserController extends Controller
                 $user->mobile_number = $request->mobile;
                 $user->password = Hash::make($request->password);
                 $user->mobile_otp = $otp; // Store OTP for mobile
+                // dd($otp);
             } else {
                 $request->validate([
                     'email' => 'required|email|unique:users,email',
@@ -237,11 +239,17 @@ class UserController extends Controller
             if ($user) {
                 if ($request->form_name == 'withEmail') {
                     Mail::to($user->email)->send(new SendRegistrationOTP($otp));
+                    return redirect()->route('otp', ['token' => $user->remember_token])
+                        ->with('success', 'A six-digit OTP has been sent to your mobile.');
+                }else {
+                    $twilio = new TwilioService();
+                    $message = "Your OTP for registration is: $otp";
+                    $twilio->sendSMS($user->mobile_number, $message);
+                    return redirect()->route('otp', ['token' => $user->remember_token])
+                        ->with('success', 'A six-digit OTP has been sent to your mobile.');
                 }
             }
 
-            return redirect()->route('otp', ['token' => $user->remember_token])
-                ->with('success', 'A six-digit OTP has been sent to your email or mobile.');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()
                 ->withErrors($e->validator)
@@ -281,7 +289,7 @@ class UserController extends Controller
 
 
         $exist_user = User::where('remember_token', $request->remember_token)->first();
-        if ($request->otp == $exist_user->email_otp) {
+        if ($request->otp == $exist_user->email_otp || $request->otp == $exist_user->mobile_otp) {
             $exist_user->email_verified_at = now();
             $exist_user->save();
             Auth::login($exist_user);
