@@ -1,6 +1,8 @@
 /* Success - Green */
 .toast-success {
-    background-color: #28a745 !important; /* Bootstrap Success Green */
+    /* background-color: #28a745 !important;  */
+    background-color: #07f03d !important; 
+    /* Bootstrap Success Green */
     color: white !important;
 }
 

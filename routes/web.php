@@ -182,7 +182,7 @@ Route::group(['prefix' => ''], function () {
     Route::post('/setup-submit', [HomeController::class, 'setupSubmit'])->name('setup-submit');
     Route::get('/register', [UserController::class, 'register'])->name('register');
     Route::post('/register/submit', [UserController::class, 'registerSubmit'])->name('register.submit');
-    // Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
     Route::get('/login', [UserController::class, 'login'])->name('login');
     Route::post('/login/submit', [UserController::class, 'loginSubmit'])->name('login.submit');
     Route::get('/otp/{token}', [UserController::class, 'otp'])->name('otp');

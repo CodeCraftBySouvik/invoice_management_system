@@ -301,11 +301,11 @@ class UserController extends Controller
             }
         }
 
-    // public function logout()
-    // {
-    //     Auth::logout();
-    //     return redirect()->route('register');
-    // }
+    public function logout()
+    {
+        Auth::guard('web')->logout();
+        return redirect()->route('register')->with('success','Logout Successfully');
+    }
 
     // public function dashboard()
     // {

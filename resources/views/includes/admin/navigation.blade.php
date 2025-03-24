@@ -67,10 +67,13 @@
         </li>
 
         <li>
-          <a href="" class="nav-link text-white d-flex align-items-center has-submenu no-link" data-bs-toggle="modal" href="#" data-bs-target="#upgradeModal">
+          <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit()" class="nav-link text-white d-flex align-items-center has-submenu no-link" data-bs-toggle="" href="#" data-bs-target="">
             <img class="icon" src="{{ env('COMMON_HOST') . 'assets/admin/img/icon-logout.svg' }}" alt="icon" width="24" height="24" loading="lazy" />
             <span>Logout</span>
           </a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+          </form>
         </li>
       </ul>
     </div>
