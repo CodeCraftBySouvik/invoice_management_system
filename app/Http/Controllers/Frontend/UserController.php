@@ -202,6 +202,62 @@ class UserController extends Controller
 
     // new scratch code
 
+     public function login() {
+        $page = [
+            'term' => 'Login'
+        ];
+
+        return view('frontend.user.login', compact('page'));
+    }
+
+        public function loginSubmit(Request $request){
+            
+            try {
+                if ($request->form_name == 'withMobile') {
+                    // Validate mobile login form
+                    $request->validate([
+                        'mobile' => 'required|digits:10',
+                        'password' => 'required|min:6',
+                    ]);
+        
+                    $user = User::where('mobile_number', $request->mobile)->first();
+                    $redirectData = ['mobile' => $request->mobile, 'form_name' => 'withMobile'];
+
+                } else {
+                    // Validate email login form
+                    $request->validate([
+                        'email' => 'required|email',
+                        'password' => 'required|min:6',
+                    ]);
+        
+                    $user = User::where('email', $request->email)->first();
+                    $redirectData = ['email' => $request->email, 'form_name' => 'withEmail'];
+
+                }
+
+                if (!$user) {
+                    // Redirect to register if the user does not exist
+                    return redirect()->route('register')->withInput($redirectData)
+                        ->with('error', 'No account found. Please register first.');
+                }
+        
+                if (!$user || !Hash::check($request->password, $user->password)) {
+                    return redirect()->back()->withErrors(['login' => 'Invalid credentials.'])->withInput();
+                }
+        
+                // If already verified, log in directly
+                Auth::login($user);
+                return redirect()->route('pricing')->with('success', 'Logged in successfully.');
+        
+            } catch (\Illuminate\Validation\ValidationException $e) {
+                return redirect()->back()
+                    ->withErrors($e->validator)
+                    ->withInput()
+                    ->with('active_tab', $request->form_name == 'withMobile' ? 'pills-2' : 'pills-1');
+            }
+        }
+
+
         public function register()
         {
             return view('frontend.user.register');

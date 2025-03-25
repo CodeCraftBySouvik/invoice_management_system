@@ -101,7 +101,7 @@
             <li class="nav-item me-md-4"><a href="{{ route('home') }}" class="nav-link text-white" aria-current="page">Home</a></li>
             <li class="nav-item mx-md-4"><a href="" class="nav-link text-white">Play App Video</a></li>
             <li class="nav-item mx-md-4"><a href="{{Auth::check() ?  route('pricing') : route('register') }}" class="nav-link text-white">Pricing</a></li>
-            <li class="nav-item mt-2 mt-md-0 ms-md-5 me-md-3"><a href="{{ config('app.main_front_url') }}/login" class="nav-link btn btn-primary-app dark">Upgrade Now</a></li>
+            <li class="nav-item mt-2 mt-md-0 ms-md-5 me-md-3"><a href="{{ route('login') }}" class="nav-link btn btn-primary-app dark">Upgrade Now</a></li>
             {{-- <!-- <li class="nav-item mt-2 mt-md-0 "><a href="{{ route('index') }}" class="nav-link btn btn-outline btn-primary-app dark">Free Trial</a></li> --> --}}
           </ul>
         </div>
