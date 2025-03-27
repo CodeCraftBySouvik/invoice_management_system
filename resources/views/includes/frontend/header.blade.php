@@ -17,8 +17,27 @@
                         <li class="nav-item me-md-4"><a href="{{ route('home') }}" class="nav-link @if( Route::is('home')) active @endif" aria-current="page">Home</a></li>
                         <li class="nav-item mx-md-4"><a href="{{ config('app.main_front_url') }}/demo" class="nav-link @if( Route::is('home2')) active @endif">Play App Video</a></li>
                         <li class="nav-item mx-md-4"><a href="{{ Auth::check() ? route('pricing') : route('register')}}" class="nav-link @if( Route::is('pricing')) active @endif">Pricing</a></li>
+                        @if(!Auth::check())
                         <li class="nav-item mt-2 mt-md-0 ms-md-5 me-md-3"><a href="{{ route('login') }}" class="nav-link btn btn-primary-app dark">Upgrade Now</a></li>
+                        @endif
+                        @if(!Auth::check())
                         <li class="nav-item mt-2 mt-md-0 "><a href="{{route('register')}}" class="nav-link btn btn-outline btn-primary-app dark">Free Trial</a></li>
+                        @else
+                        <li class="nav-item mt-2 mt-md-0 ms-md-5 me-md-3"><a href="{{ route('free-trial-dashboard') }}" class="nav-link btn btn-primary-app dark">Free Trial</a></li>
+                        @endif
+                        @if(Auth::check() && Auth::user()->id == 1)
+                        <li class="nav-item mt-2 mt-md-0 "><a href="{{route('package-customize')}}" class="nav-link btn btn-outline btn-primary-app dark ms-3">Customize Package</a></li>
+                        @endif
+                        @if(Auth::check())
+                        <li>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit()" class="nav-link btn btn-outline btn-primary-app dark ms-3" data-bs-toggle="" href="#" data-bs-target="">
+                                <span>Logout</span>
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>

@@ -178,6 +178,8 @@ Route::group(['prefix' => ''], function () {
         Route::get('/setup', [HomeController::class, 'setup'])->name('setup');
         Route::get('/free-trial-dashboard', [HomeController::class, 'FreeTrialdashboard'])->name('free-trial-dashboard');
         Route::get('/pricing', [HomeController::class, 'pricing'])->name('pricing');
+        Route::get('/package-customize', [HomeController::class, 'package_customize'])->name('package-customize');
+        Route::post('/package-customize-store', [HomeController::class, 'package_customize_store'])->name('package-customize-store');
     }); 
     Route::post('/setup-submit', [HomeController::class, 'setupSubmit'])->name('setup-submit');
     Route::get('/register', [UserController::class, 'register'])->name('register');

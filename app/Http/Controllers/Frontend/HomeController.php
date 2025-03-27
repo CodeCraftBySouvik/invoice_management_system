@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\UserCompaniesData;
+use App\Models\Package;
 
 // use Stripe\Stripe;
 // use Stripe\PaymentIntent;
@@ -29,7 +30,41 @@ class HomeController extends Controller
             'term' => 'Pricing'
         ];
 
-        return view('frontend.pricing', compact('page'));
+        $monthly_package = Package::where('billing_cycle','=','monthly')->orderBy('id','ASC')->get();
+        $yearly_package = Package::where('billing_cycle','=','yearly')->orderBy('id','ASC')->get();
+        return view('frontend.pricing', compact('page','monthly_package','yearly_package'));
+    }
+    public function package_customize() {
+        $page = [
+            'term' => 'package-customize'
+        ];
+
+        return view('frontend.customize-package', compact('page'));
+    }
+    public function package_customize_store(Request $request) {
+        
+
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'price' => 'nullable|numeric',
+        'description' => 'required|string',
+        'billing_cycle' => 'required|in:monthly,yearly',
+        'currency' => 'nullable|string|max:20',
+        'button_text' => 'required|string|max:25',
+    ]);
+
+    // Store the package in the database
+    Package::create([
+        'name' => $request->name,
+        'price' => $request->price ?? 0.00,
+        'description' => $request->description,
+        'billing_cycle' => $request->billing_cycle,
+        'currency' => $request->currency ?? 'AED', // Default to AED if empty
+        'button_text' => $request->button_text, // Default text
+    ]);
+
+    return redirect()->back()->with('success', 'Custom package saved successfully!');
+      
     }
 
     public function CreateAccount() {
