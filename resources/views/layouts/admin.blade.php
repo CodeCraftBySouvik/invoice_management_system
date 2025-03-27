@@ -17,10 +17,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ env('COMMON_HOST') . 'assets/vendor/bootstrap/dist/css/bootstrap.min.css' }}">
     <link rel="stylesheet" href="{{ env('COMMON_HOST') . 'assets/vendor/bootstrap-icons/font/bootstrap-icons.min.css' }}">
+    <link rel="stylesheet" href="{{asset('assets/frontend/css/style.css')}}">
 
     <!-- Menu fonts-->
     <!-- <link href="{{ asset('vendor/metisMenu.css') }}" rel="stylesheet"> -->
@@ -85,6 +87,39 @@
     <!-- Custom scripts for all pages-->
     <script src="{{ env('COMMON_HOST') . 'assets/admin/js/admin.js' }}"></script>
     <script src="{{ env('COMMON_HOST') . 'assets/admin/js/admin-trial.js' }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 	@yield('customjs')
+  <script>
+    $(document).ready(function() {
+      toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": true,
+          "progressBar": true,
+          "positionClass": "toast-top-right",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut",
+            // Set Background Color Manually
+      };
+      @if (session('success'))
+          toastr.success('{{ session('success') }}');
+      @endif
+      @if (session('warning'))
+          toastr.warning('{{ session('warning') }}');
+      @endif
+      @if (session('error'))
+          toastr.error('{{ session('error') }}');
+      @endif
+  });
+ </script>
 </body>
 </html>

@@ -67,10 +67,13 @@
         </li>
 
         <li>
-          <a href="" class="nav-link text-white d-flex align-items-center has-submenu no-link" data-bs-toggle="modal" href="#" data-bs-target="#upgradeModal">
+          <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit()" class="nav-link text-white d-flex align-items-center has-submenu no-link" data-bs-toggle="" href="#" data-bs-target="">
             <img class="icon" src="{{ env('COMMON_HOST') . 'assets/admin/img/icon-logout.svg' }}" alt="icon" width="24" height="24" loading="lazy" />
             <span>Logout</span>
           </a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+          </form>
         </li>
       </ul>
     </div>
@@ -98,7 +101,7 @@
             <li class="nav-item me-md-4"><a href="{{ route('home') }}" class="nav-link text-white" aria-current="page">Home</a></li>
             <li class="nav-item mx-md-4"><a href="" class="nav-link text-white">Play App Video</a></li>
             <li class="nav-item mx-md-4"><a href="{{Auth::check() ?  route('pricing') : route('register') }}" class="nav-link text-white">Pricing</a></li>
-            <li class="nav-item mt-2 mt-md-0 ms-md-5 me-md-3"><a href="{{ config('app.main_front_url') }}/login" class="nav-link btn btn-primary-app dark">Upgrade Now</a></li>
+            <li class="nav-item mt-2 mt-md-0 ms-md-5 me-md-3"><a href="{{ route('login') }}" class="nav-link btn btn-primary-app dark">Upgrade Now</a></li>
             {{-- <!-- <li class="nav-item mt-2 mt-md-0 "><a href="{{ route('index') }}" class="nav-link btn btn-outline btn-primary-app dark">Free Trial</a></li> --> --}}
           </ul>
         </div>

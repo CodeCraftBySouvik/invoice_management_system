@@ -33,7 +33,7 @@
                                 <div class="row">
                                     <div class="col-12 form-group">
                                         <input type="tel" class="form-control font-size-sm @error('otp') is-invalid @enderror" id="otp" name="otp" placeholder="" required="" value="{{ old('otp') }}">
-                                        @include('includes.utils.field-validation', ['field' => 'otp', 'message' => 'Please enter OTP'])
+                                        {{-- @include('includes.utils.field-validation', ['field' => 'otp', 'message' => 'Please enter OTP']) --}}
                                         @error('otp') <p class="text-danger">{{$message}}</p>@enderror
                                     </div>
                                     <input type="hidden" name="remember_token" value="{{$token}}">
