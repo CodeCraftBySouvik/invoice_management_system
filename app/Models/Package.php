@@ -11,7 +11,7 @@ class Package extends Model
     protected $table = 'packages';
 
     protected $fillable = [
-        'name', 'price', 'billing_cycle', 'description', 'button_text', 'currency'
+        'name', 'monthly_price', 'yearly_price', 'description', 'button_text', 'currency'
     ];
     
 }

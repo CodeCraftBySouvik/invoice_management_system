@@ -37,14 +37,21 @@
                                 @error('name') <p class="text-danger">{{ $message }}</p> @enderror
                             </div>
 
-                            <!-- Price -->
+                            <!--Monthly Price -->
                             <div class="mb-3">
-                                <label class="form-label">Price (AED) <small>(Leave empty for custom pricing)</small></label>
-                                <input type="number" name="price" class="form-control"  value="{{ old('price') }}" placeholder="Enter price">
-                                @error('price') <p class="text-danger">{{ $message }}</p> @enderror
+                                <label class="form-label">Price(Monthly) <small>(Leave empty for custom pricing)</small></label>
+                                <input type="number" name="monthly_price" class="form-control"  value="{{ old('monthly_price') }}" placeholder="Enter price">
+                                @error('monthly_price') <p class="text-danger">{{ $message }}</p> @enderror
                             </div>
 
-                            <!-- Billing Cycle -->
+                            {{-- Yearly Yrice --}}
+                            <div class="mb-3">
+                                <label class="form-label">Price(Yearly) <small>(Leave empty for custom pricing)</small></label>
+                                <input type="number" name="yearly_price" class="form-control"  value="{{ old('yearly_price') }}" placeholder="Enter price">
+                                @error('yearly_price') <p class="text-danger">{{ $message }}</p> @enderror
+                            </div>
+
+                            {{-- <!-- Billing Cycle -->
                             <div class="mb-3">
                                 <label class="form-label">Billing Cycle</label>
                                 <select name="billing_cycle" class="form-control" >
@@ -53,7 +60,7 @@
                                     <option value="yearly" {{ old('billing_cycle') == 'yearly' ? 'selected' : '' }}>Yearly</option>
                                 </select>
                                 @error('billing_cycle') <p class="text-danger">{{ $message }}</p> @enderror
-                            </div>
+                            </div> --}}
 
                             <!-- Description -->
                             <div class="mb-3">

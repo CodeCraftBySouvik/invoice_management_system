@@ -24,10 +24,10 @@
         <div class="row">
             <div class="col-md-12 mb-3">
                 <div class="pricing-buttons d-flex align-items-center justify-content-between mx-auto">
-                    <div class="button d-flex align-items-center justify-content-center flex-grow-1 active" data-tier="month">
+                    <div class="button d-flex align-items-center justify-content-center flex-grow-1 active" data-tier="monthly">
                         Monthly
                     </div>
-                    <div class="button d-flex align-items-center justify-content-center flex-grow-1" data-tier="year">
+                    <div class="button d-flex align-items-center justify-content-center flex-grow-1" data-tier="yearly">
                         Yearly
                     </div>
                 </div>
@@ -43,11 +43,22 @@
                         </div>
                         <div class="card-body text-center px-4 py-4">
                             <p class="fw-normal mb-3 price">
-                                {{ $item->price == -1 ? "" : $item->currency }} 
-                                <span class="fs-4 fw-bold">{{ $item->price == -1 ? "Custom" : $item->price }}</span>
+                                {{  $item->currency }} 
+                                <span class="fs-4 fw-bold">{{ $item->monthly_price }}</span>
                             </p>
                             <p class="text-body-emphasis mb-5 px-4">{{ $item->description }}</p>
-                            <a href="{{ config('app.main_front_url') }}/setup" type="button" class="btn btn-primary-app w-100">{{ $item->button_text }}</a>
+                            <a href="{{route('checkout',[
+                                'tier' => 'monthly',
+                                 'package_id' => $item->id,
+                                'package_name' => $item->name,
+                                'price' => $item->monthly_price,
+                                'currency' => $item->currency,
+                                'description' => $item->description
+                            ])}}" 
+                            type="button" 
+                            class="btn btn-primary-app w-100">
+                            {{ $item->button_text }}
+                          </a>
                         </div>
                     </div>
                 </div>
@@ -58,7 +69,7 @@
                         <div class="card-body text-center px-4 py-4">
                             <p class="fw-normal mb-3 price"><span class="fs-4 fw-bold"></span></p>
                             <p class="text-body-emphasis mb-5 px-4">No package available in monthly</p>
-                            <a href="{{ config('app.main_front_url') }}/setup" type="button" class="btn btn-primary-app w-100"></a>
+                            <a href="javascript:void(0);" type="button" class="btn btn-primary-app w-100"></a>
                         </div>
                     </div>
                 </div>
@@ -75,11 +86,22 @@
                         </div>
                         <div class="card-body text-center px-4 py-4">
                             <p class="fw-normal mb-3 price">
-                                {{ $item->price == -1 ? "" : $item->currency }} 
-                                <span class="fs-4 fw-bold">{{ $item->price == -1 ? "Custom" : $item->price }}</span>
+                                {{ $item->currency }} 
+                                <span class="fs-4 fw-bold">{{ $item->yearly_price }}</span>
                             </p>
                             <p class="text-body-emphasis mb-5 px-4">{{ $item->description }}</p>
-                            <a href="{{ config('app.main_front_url') }}/setup" type="button" class="btn btn-primary-app w-100">{{ $item->button_text }}</a>
+                            <a href="{{route('checkout',[
+                                 'tier' => 'yearly',
+                                'package_id' => $item->id,
+                                'package_name' => $item->name,
+                                'price' => $item->yearly_price,
+                                'currency' => $item->currency,
+                                'description' => $item->description
+                            ])}}" 
+                            type="button"
+                             class="btn btn-primary-app w-100">
+                             {{ $item->button_text }}
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -90,7 +112,7 @@
                         <div class="card-body text-center px-4 py-4">
                             <p class="fw-normal mb-3 price"><span class="fs-4 fw-bold"></span></p>
                             <p class="text-body-emphasis mb-5 px-4">No package available in yearly</p>
-                            <a href="{{ config('app.main_front_url') }}/setup" type="button" class="btn btn-primary-app w-100"></a>
+                            <a href="javascript:void(0);" type="button" class="btn btn-primary-app w-100"></a>
                         </div>
                     </div>
                 </div>
@@ -124,28 +146,25 @@
     //     });
     // });
 
-    $(document).ready(function () {
-        // Set Monthly Packages active by default
-        $('.pricing-tier.yearly').hide(); // Hide yearly packages initially
+    $(document).ready(function() {
+    $(".pricing-buttons .button").click(function() {
+        var selectedTier = $(this).attr("data-tier");
 
-        $('.pricing-buttons .button').click(function(){
-            var el = $(this);
-            var selectedTier = el.attr('data-tier');
+        // Remove active class from all buttons and add to the selected one
+        $(".pricing-buttons .button").removeClass("active");
+        $(this).addClass("active");
 
-            // Toggle Active Class for Buttons
-            $('.pricing-buttons .button').removeClass('active');
-            el.addClass('active');
-
-            // Show Monthly Packages if 'month' is selected, otherwise show Yearly
-            if (selectedTier === 'month') {
-                $('.pricing-tier.monthly').show();
-                $('.pricing-tier.yearly').hide();
-            } else {
-                $('.pricing-tier.yearly').show();
-                $('.pricing-tier.monthly').hide();
-            }
-        });
+        // Hide all pricing tiers and show only the selected one
+        $(".pricing-tier").hide();
+        $(".pricing-tier." + selectedTier).fadeIn();
     });
+
+    // Show the monthly plans by default
+    $(".pricing-tier.yearly").hide();
+});
+
+
+   
     
 </script>
 @endsection

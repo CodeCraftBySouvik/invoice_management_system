@@ -29,9 +29,9 @@ class HomeController extends Controller
         $page = [
             'term' => 'Pricing'
         ];
-
-        $monthly_package = Package::where('billing_cycle','=','monthly')->orderBy('id','ASC')->get();
-        $yearly_package = Package::where('billing_cycle','=','yearly')->orderBy('id','ASC')->get();
+        $monthly_package = Package::whereNotNull('monthly_price')->where('monthly_price','>',0)->get();
+        $yearly_package  = Package::whereNotNull('yearly_price')->where('yearly_price','>',0)->get();
+        
         return view('frontend.pricing', compact('page','monthly_package','yearly_package'));
     }
     public function package_customize() {
@@ -42,28 +42,31 @@ class HomeController extends Controller
         return view('frontend.customize-package', compact('page'));
     }
     public function package_customize_store(Request $request) {
-        
+        // dd($request->all());
 
     $request->validate([
         'name' => 'required|string|max:255',
-        'price' => 'nullable|numeric',
+        'monthly_price' => 'nullable|numeric',
+        'yearly_price' => 'nullable|numeric',
         'description' => 'required|string',
-        'billing_cycle' => 'required|in:monthly,yearly',
         'currency' => 'nullable|string|max:20',
         'button_text' => 'required|string|max:25',
     ]);
 
+      // Ensure that null values are converted to 0.00 if left empty
+      $monthlyPrice = $request->monthly_price !== null ? $request->monthly_price : 0.00;
+      $yearlyPrice = $request->yearly_price !== null ? $request->yearly_price : 0.00;
     // Store the package in the database
     Package::create([
         'name' => $request->name,
-        'price' => $request->price ?? 0.00,
+        'monthly_price' => $monthlyPrice,
+        'yearly_price' => $yearlyPrice,
         'description' => $request->description,
-        'billing_cycle' => $request->billing_cycle,
         'currency' => $request->currency ?? 'AED', // Default to AED if empty
         'button_text' => $request->button_text, // Default text
     ]);
 
-    return redirect()->back()->with('success', 'Custom package saved successfully!');
+    return redirect()->route('pricing')->with('success', 'Custom package saved successfully!');
       
     }
 
@@ -75,9 +78,23 @@ class HomeController extends Controller
         return view('frontend.create-account', compact('page'));
     }
 
-    public function checkout() {
+    public function checkout(Request $request) {
+       
+
+        $tier = $request->query('tier','monthly');
+        $packageId = $request->query('package_id');
+        $package = Package::find($packageId);
+
         $page = [
-            'term' => 'Checkout'
+            'term' => 'Checkout',
+            'tier' => $tier,
+            'package' => $package ?: [
+                'id' => $request->query('package_id'),
+                'name' => $request->query('package_name'),
+                'price' => $request->query('price'),
+                'currency' => $request->query('currency'),
+                'description' => $request->query('description')
+            ]
         ];
 
         return view('frontend.checkout', compact('page'));

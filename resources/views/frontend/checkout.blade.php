@@ -163,17 +163,17 @@
                                     <div class="form-group mb-4 border-bottom">
                                         <div class="billing_cycles">
                                             <div class="form-check d-flex align-items-center justify-content-between w-100 billing_cycle pb-3 g-12">
-                                                <input type="radio" class="form-check-input radio font-size-sm" id="billing_cycle-1" name="billing_cycle" placeholder="" required="">
+                                                <input type="radio" class="form-check-input radio font-size-sm" id="billing_cycle-1" name="billing_cycle" placeholder="" required="" value="monthly" {{$page['tier'] == 'monthly' ? 'checked' : ''}}>
                                                 <label for="billing_cycle-1" class="form-check-label w-100 d-flex align-items-center justify-content-between m-0">
                                                     <span>Monthly</span>
-                                                    <span>AED 50/m</span>
+                                                    <span>{{$page['package']['currency']}} {{$page['tier'] == 'monthly' ? intval($page['package']['price']) : 0}}/m</span>
                                                 </label>
                                             </div>
                                             <div class="form-check d-flex align-items-center justify-content-between w-100 billing_cycle pb-3 g-12">
                                                 <input type="radio" class="form-check-input radio font-size-sm" id="billing_cycle-2" name="billing_cycle" placeholder="" required="">
                                                 <label for="billing_cycle-2" class="form-check-label w-100 d-flex align-items-center justify-content-between m-0">
                                                     <span>Yearly</span>
-                                                    <span>AED 500/m</span>
+                                                    <span>{{$page['package']['currency']}} {{$page['tier'] =='yearly' ? intval($page['package']['price']) : 0}}/m</span>
                                                 </label>
                                             </div>
                                         </div>
@@ -184,11 +184,11 @@
                                         <div class="subtotal">
                                             <label for="subtotal-1" class="form-check-label w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
                                                 <span>Price</span>
-                                                <span>AED 250/year</span>
+                                                <span>{{intval($page['package']['price'] * 12)}}/year</span>
                                             </label>
                                             <label for="subtotal-2" class="form-check-label w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
                                                 <span>VAT</span>
-                                                <span>AED 50/year</span>
+                                                <span>AED 0/year</span>
                                             </label>
                                         </div>
                                     </div>
@@ -196,7 +196,7 @@
                                         <div class="total">
                                             <label for="total-1" class="form-check-label fw-semibold w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
                                                 <span>Total</span>
-                                                <span>AED 300/year</span>
+                                                <span>AED /year</span>
                                             </label>
                                         </div>
                                     </div>

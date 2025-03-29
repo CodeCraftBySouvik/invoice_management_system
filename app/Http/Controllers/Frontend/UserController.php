@@ -242,7 +242,7 @@ class UserController extends Controller
                 }
         
                 if (!$user || !Hash::check($request->password, $user->password)) {
-                    return redirect()->back()->withErrors(['login' => 'Invalid credentials.'])->withInput();
+                    return redirect()->back()->withInput()->with('error','Invalid credentials');
                 }
         
                 // If already verified, log in directly
