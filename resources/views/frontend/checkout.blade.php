@@ -180,14 +180,11 @@
                                     </div>
                                     @if($page['data']['attempt_package_type'] == 'monthly')
                                     <p class="fw-medium mb-4 pb-1">Monthly Subscription</p>
-                                    @else
-                                    <p class="fw-medium mb-4 pb-1">Yearly Subscription</p>
-                                    @endif
                                     <div class="mb-2 border-bottom">
                                         <div class="subtotal">
                                             <label for="subtotal-1" class="form-check-label w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
                                                 <span>Price</span>
-                                                <span>/year</span>
+                                                <span>{{$page['package']['monthly_price']}}/mo</span>
                                             </label>
                                             <label for="subtotal-2" class="form-check-label w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
                                                 <span>VAT</span>
@@ -195,6 +192,23 @@
                                             </label>
                                         </div>
                                     </div>
+                                    @else
+                                    <p class="fw-medium mb-4 pb-1">Yearly Subscription</p>
+                                    <div class="mb-2 border-bottom">
+                                        <div class="subtotal">
+                                            <label for="subtotal-1" class="form-check-label w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
+                                                <span>Price</span>
+                                                <span>{{$page['package']['yearly_price']}}/year</span>
+                                            </label>
+                                            <label for="subtotal-2" class="form-check-label w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
+                                                <span>VAT</span>
+                                                <span>AED {{$page['vat']}}/year</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    @endif
+
+
                                     <div class="border-bottom">
                                         <div class="total">
                                             <label for="total-1" class="form-check-label fw-semibold w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
