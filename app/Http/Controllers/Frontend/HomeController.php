@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\UserCompaniesData;
 use App\Models\Package;
+use App\Models\Transaction;
 
 // use Stripe\Stripe;
 // use Stripe\PaymentIntent;
@@ -29,8 +30,8 @@ class HomeController extends Controller
         $page = [
             'term' => 'Pricing'
         ];
-        $monthly_package = Package::whereNotNull('monthly_price')->where('monthly_price','>',0)->get();
-        $yearly_package  = Package::whereNotNull('yearly_price')->where('yearly_price','>',0)->get();
+        $monthly_package = Package::whereNotNull('monthly_price')->where('monthly_price','>=',0)->get();
+        $yearly_package  = Package::whereNotNull('yearly_price')->where('yearly_price','>=',0)->get();
         
         return view('frontend.pricing', compact('page','monthly_package','yearly_package'));
     }
@@ -78,23 +79,28 @@ class HomeController extends Controller
         return view('frontend.create-account', compact('page'));
     }
 
+    public function start_checkout(Request $request) {
+       $user_id = Auth::user()->id;
+
+       $data = new Transaction();
+
+       $data->user_id = $user_id;
+       $data->package_id = $request->package_id;
+       $data->attempt_package_type = $request->package_type;
+       $data->attempt_package_amount = $request->package_amount;
+       $data->attempt_date_time = now();
+       $data->save();
+        return response()->json(['status'=>'success','url'=>route('checkout')]);
+    }
     public function checkout(Request $request) {
-       
-
-        $tier = $request->query('tier','monthly');
-        $packageId = $request->query('package_id');
-        $package = Package::find($packageId);
-
+        $data  = Transaction::where('user_id',Auth::user()->id)->orderBy('id','DESC')->first();
+        $package = Package::find($data->package_id);
+        $vat = env('VAT_AMOUNT');
         $page = [
             'term' => 'Checkout',
-            'tier' => $tier,
-            'package' => $package ?: [
-                'id' => $request->query('package_id'),
-                'name' => $request->query('package_name'),
-                'price' => $request->query('price'),
-                'currency' => $request->query('currency'),
-                'description' => $request->query('description')
-            ]
+            'vat'=> $vat,
+            'package'=> $package,
+            'data'=> $data,
         ];
 
         return view('frontend.checkout', compact('page'));
@@ -104,6 +110,7 @@ class HomeController extends Controller
         $page = [
             'term' => 'Checkout Success'
         ];
+        
 
         return view('frontend.checkout-success', compact('page'));
     }

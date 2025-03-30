@@ -179,6 +179,7 @@ Route::group(['prefix' => ''], function () {
         Route::get('/pricing', [HomeController::class, 'pricing'])->name('pricing');
         Route::get('/package-customize', [HomeController::class, 'package_customize'])->name('package-customize');
         Route::post('/package-customize-store', [HomeController::class, 'package_customize_store'])->name('package-customize-store');
+        Route::post('/start-checkout', [HomeController::class, 'start_checkout'])->name('start-checkout');
         Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
         Route::get('/checkout/success', [HomeController::class, 'checkoutSuccess'])->name('checkout-success');
     }); 

@@ -47,18 +47,9 @@
                                 <span class="fs-4 fw-bold">{{ $item->monthly_price }}</span>
                             </p>
                             <p class="text-body-emphasis mb-5 px-4">{{ $item->description }}</p>
-                            <a href="{{route('checkout',[
-                                'tier' => 'monthly',
-                                 'package_id' => $item->id,
-                                'package_name' => $item->name,
-                                'price' => $item->monthly_price,
-                                'currency' => $item->currency,
-                                'description' => $item->description
-                            ])}}" 
-                            type="button" 
-                            class="btn btn-primary-app w-100">
+                            <button data-package_id="{{$item->id}}" data-package_type="monthly" data-package_amount="{{$item->monthly_price}}" type="button" class="btn btn-primary-app w-100 save-package">
                             {{ $item->button_text }}
-                          </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -90,18 +81,9 @@
                                 <span class="fs-4 fw-bold">{{ $item->yearly_price }}</span>
                             </p>
                             <p class="text-body-emphasis mb-5 px-4">{{ $item->description }}</p>
-                            <a href="{{route('checkout',[
-                                 'tier' => 'yearly',
-                                'package_id' => $item->id,
-                                'package_name' => $item->name,
-                                'price' => $item->yearly_price,
-                                'currency' => $item->currency,
-                                'description' => $item->description
-                            ])}}" 
-                            type="button"
-                             class="btn btn-primary-app w-100">
+                            <button data-package_id="{{$item->id}}" data-package_amount="{{$item->yearly_price}}" data-package_type="yearly" type="button" class="btn btn-primary-app w-100 save-package">
                              {{ $item->button_text }}
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -161,6 +143,40 @@
 
     // Show the monthly plans by default
     $(".pricing-tier.yearly").hide();
+
+
+    //checkout section
+    $('.save-package').on('click', function() {
+        let package_id = $(this).data('package_id');
+        let package_type = $(this).data('package_type');
+        let package_amount = $(this).data('package_amount');
+        
+
+        $.ajax({
+            url: "{{ route('start-checkout') }}",  // Replace with your actual route
+            type: "POST",
+            data: {
+                package_id: package_id,
+                package_type: package_type,
+                package_amount: package_amount,
+                _token: "{{ csrf_token() }}"
+            },
+            beforeSend: function() {
+                console.log("Saving package...");
+            },
+            success: function(response) {
+                // console.log(response.status === 'success')
+
+                if(response.status === 'success'){
+                    window.location.href=response.url;
+                }
+            },
+            error: function(xhr) {
+                alert("Error: " + xhr.responseJSON.message);  // Show error message
+            }
+        });
+    });
+
 });
 
 

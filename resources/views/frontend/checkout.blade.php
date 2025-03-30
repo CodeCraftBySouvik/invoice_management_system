@@ -163,32 +163,35 @@
                                     <div class="form-group mb-4 border-bottom">
                                         <div class="billing_cycles">
                                             <div class="form-check d-flex align-items-center justify-content-between w-100 billing_cycle pb-3 g-12">
-                                                <input type="radio" class="form-check-input radio font-size-sm" id="billing_cycle-1" name="billing_cycle" placeholder="" required="" value="monthly" {{$page['tier'] == 'monthly' ? 'checked' : ''}}>
+                                                <input type="radio" class="form-check-input radio font-size-sm" id="billing_cycle-1" name="billing_cycle" placeholder="" required="" value="monthly" {{$page['data']['attempt_package_type'] == 'monthly' ? 'checked' : ''}}>
                                                 <label for="billing_cycle-1" class="form-check-label w-100 d-flex align-items-center justify-content-between m-0">
                                                     <span>Monthly</span>
-                                                    <span>{{$page['package']['currency']}} {{$page['tier'] == 'monthly' ? intval($page['package']['price']) : 0}}/m</span>
+                                                    <span>{{$page['package']['monthly_price']}}/m</span>
                                                 </label>
                                             </div>
                                             <div class="form-check d-flex align-items-center justify-content-between w-100 billing_cycle pb-3 g-12">
-                                                <input type="radio" class="form-check-input radio font-size-sm" id="billing_cycle-2" name="billing_cycle" placeholder="" required="">
+                                                <input type="radio" class="form-check-input radio font-size-sm" id="billing_cycle-2" name="billing_cycle" placeholder="" required="" value="yearly" {{$page['data']['attempt_package_type'] == 'yearly' ? 'checked' : ''}}>
                                                 <label for="billing_cycle-2" class="form-check-label w-100 d-flex align-items-center justify-content-between m-0">
                                                     <span>Yearly</span>
-                                                    <span>{{$page['package']['currency']}} {{$page['tier'] =='yearly' ? intval($page['package']['price']) : 0}}/m</span>
+                                                    <span>{{$page['package']['yearly_price']}}/m</span>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
-
+                                    @if($page['data']['attempt_package_type'] == 'monthly')
+                                    <p class="fw-medium mb-4 pb-1">Monthly Subscription</p>
+                                    @else
                                     <p class="fw-medium mb-4 pb-1">Yearly Subscription</p>
+                                    @endif
                                     <div class="mb-2 border-bottom">
                                         <div class="subtotal">
                                             <label for="subtotal-1" class="form-check-label w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
                                                 <span>Price</span>
-                                                <span>{{intval($page['package']['price'] * 12)}}/year</span>
+                                                <span>/year</span>
                                             </label>
                                             <label for="subtotal-2" class="form-check-label w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
                                                 <span>VAT</span>
-                                                <span>AED 0/year</span>
+                                                <span>AED {{$page['vat']}}/year</span>
                                             </label>
                                         </div>
                                     </div>
