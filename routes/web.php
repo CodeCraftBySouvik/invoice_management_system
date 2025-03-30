@@ -181,6 +181,8 @@ Route::group(['prefix' => ''], function () {
         Route::post('/package-customize-store', [HomeController::class, 'package_customize_store'])->name('package-customize-store');
         Route::post('/start-checkout', [HomeController::class, 'start_checkout'])->name('start-checkout');
         Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
+        Route::post('/process-card-payment', [HomeController::class, 'processCardPayment'])->name('process-card-payment');
+        Route::post('/process-stripe-payment', [PaymentController::class, 'processStripePayment'])->name('process-stripe-payment');
         Route::get('/checkout/success', [HomeController::class, 'checkoutSuccess'])->name('checkout-success');
     }); 
     Route::post('/setup-submit', [HomeController::class, 'setupSubmit'])->name('setup-submit');

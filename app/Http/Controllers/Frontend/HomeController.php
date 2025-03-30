@@ -106,6 +106,34 @@ class HomeController extends Controller
         return view('frontend.checkout', compact('page'));
     }
 
+    public function processCardPayment(Request $request){
+        dd($request->all());
+        $request->validate([
+            'amount' => 'required|numeric',
+            'package_id' => 'required|exists:packages,id',
+            'billing_cycle' => 'required|in:monthly,yearly',
+            'card_number' => 'required|string',
+            'expiry_month' => 'required|numeric|between:1,12',
+            'expiry_year' => 'required|numeric|min:' . date('Y'),
+            'cvc' => 'required|numeric|digits_between:3,4',
+        ]);
+        Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+        try {
+              // Create payment method
+              $paymentMethod = PaymentMethod::create([
+                'type' => 'card',
+                'card' => [
+                    'number' => str_replace(' ', '', $request->card_number),
+                    'exp_month' => $request->expiry_month,
+                    'exp_year' => $request->expiry_year,
+                    'cvc' => $request->cvc,
+                ],
+            ]);
+        }catch(error){
+
+        }
+    }
+
     public function checkoutSuccess() {
         $page = [
             'term' => 'Checkout Success'
