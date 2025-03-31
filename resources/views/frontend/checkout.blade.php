@@ -12,11 +12,13 @@
             <div class="col-md-12 text-center">
                 <div class="steps mx-auto d-flex align-items-center justify-content-between">
                     <div class="step d-flex flex-column align-items-center justify-content-center position-relative">
-                        <span class="number d-flex align-items-center justify-content-center rounded-circle border border-dark mb-2">1</span>
+                        <span
+                            class="number d-flex align-items-center justify-content-center rounded-circle border border-dark mb-2">1</span>
                         <span class="label">Create account</span>
                     </div>
                     <div class="step d-flex flex-column align-items-center justify-content-center position-relative">
-                        <span class="number d-flex align-items-center justify-content-center rounded-circle bg-black text-white border border-dark mb-2">2</span>
+                        <span
+                            class="number d-flex align-items-center justify-content-center rounded-circle bg-black text-white border border-dark mb-2">2</span>
                         <span class="label">Check out</span>
                     </div>
                 </div>
@@ -41,49 +43,56 @@
                                         <div class="row g-2">
                                             <div class="col-12 form-group">
                                                 <label for="name" class="form-label">Your Name</label>
-                                                <input type="text" class="form-control font-size-sm" id="name" name="name" placeholder="" required="">
+                                                <input type="text" class="form-control font-size-sm" id="name"
+                                                    name="name" placeholder="" required="">
                                                 <div class="invalid-feedback">
                                                     Please enter a valid name.
                                                 </div>
                                             </div>
                                             <div class="col-12 form-group">
                                                 <label for="company_name" class="form-label">Company Name</label>
-                                                <input type="text" class="form-control font-size-sm" id="company_name" name="company_name" placeholder="" required="">
+                                                <input type="text" class="form-control font-size-sm" id="company_name"
+                                                    name="company_name" placeholder="" required="">
                                                 <div class="invalid-feedback">
                                                     Please enter a valid company name.
                                                 </div>
                                             </div>
                                             <div class="col-12 form-group">
                                                 <label for="country" class="form-label">Country</label>
-                                                <input type="text" class="form-control font-size-sm" id="country" name="country" placeholder="" required="">
+                                                <input type="text" class="form-control font-size-sm" id="country"
+                                                    name="country" placeholder="" required="">
                                                 <div class="invalid-feedback">
                                                     Please enter a valid country.
                                                 </div>
                                             </div>
                                             <div class="col-12 form-group">
                                                 <label for="address" class="form-label">Address</label>
-                                                <input type="text" class="form-control font-size-sm" id="address" name="address" placeholder="" required="">
+                                                <input type="text" class="form-control font-size-sm" id="address"
+                                                    name="address" placeholder="" required="">
                                                 <div class="invalid-feedback">
                                                     Please enter a valid address.
                                                 </div>
                                             </div>
                                             <div class="col-md-6 form-group">
                                                 <label for="city" class="form-label">City</label>
-                                                <input type="text" class="form-control font-size-sm" id="city" name="city" placeholder="" required="">
+                                                <input type="text" class="form-control font-size-sm" id="city"
+                                                    name="city" placeholder="" required="">
                                                 <div class="invalid-feedback">
                                                     Please enter a valid city.
                                                 </div>
                                             </div>
                                             <div class="col-md-6 form-group">
                                                 <label for="zip_code" class="form-label">Zip Code</label>
-                                                <input type="text" class="form-control font-size-sm" id="zip_code" name="zip_code" placeholder="" required="">
+                                                <input type="text" class="form-control font-size-sm" id="zip_code"
+                                                    name="zip_code" placeholder="" required="">
                                                 <div class="invalid-feedback">
                                                     Please enter a valid zip code.
                                                 </div>
                                             </div>
                                             <div class="col-12 form-group">
                                                 <label for="trn_number" class="form-label">TRN Number</label>
-                                                <input type="text" class="form-control font-size-sm" id="trn_number" name="trn_number" placeholder="" required="">
+                                                <input type="text" class="form-control font-size-sm" id="trn_number"
+                                                    name="trn_number" placeholder="" required="">
                                                 <div class="invalid-feedback">
                                                     Please enter a valid TRN number.
                                                 </div>
@@ -92,43 +101,71 @@
                                             <div class="col-12 form-group">
                                                 <div class="payment_gateways">
                                                     <div class="payment_gateway py-3 border-bottom">
-                                                        <div class="form-check d-flex align-items-center justify-content-between w-100 payment_gateway py-3 border-bottom g-12">
-                                                            <input type="radio" class="form-check-input radio font-size-sm payment-method" id="payment_gateway-1" name="payment_gateway" value="card" placeholder="" required="" checked>
-                                                            <label for="payment_gateway-1" class="form-check-label w-100 d-flex align-items-center justify-content-between m-0">
+                                                        <div
+                                                            class="form-check d-flex align-items-center justify-content-between w-100 payment_gateway py-3 border-bottom g-12">
+                                                            <input type="radio"
+                                                                class="form-check-input radio font-size-sm payment-method"
+                                                                id="payment_gateway-1" name="payment_gateway"
+                                                                value="card" placeholder="" required="" checked>
+                                                            <label for="payment_gateway-1"
+                                                                class="form-check-label w-100 d-flex align-items-center justify-content-between m-0">
                                                                 <span>Credit or Debit Card</span>
-                                                                <div class="images d-flex align-items-center justify-content-end g-6">
-                                                                    <img class="img-fluid" src="{{ env('COMMON_HOST') . 'assets/frontend/img/icon-p-visa.svg' }}" alt="Icon" width="37" height="18" loading="lazy" />
-                                                                    <img class="img-fluid" src="{{ env('COMMON_HOST') . 'assets/frontend/img/icon-p-mc.svg' }}" alt="Icon" width="30" height="18" loading="lazy" />
-                                                                    <img class="img-fluid" src="{{ env('COMMON_HOST') . 'assets/frontend/img/icon-p-amx.svg' }}" alt="Icon" width="40" height="18" loading="lazy" />
+                                                                <div
+                                                                    class="images d-flex align-items-center justify-content-end g-6">
+                                                                    <img class="img-fluid"
+                                                                        src="{{ env('COMMON_HOST') . 'assets/frontend/img/icon-p-visa.svg' }}"
+                                                                        alt="Icon" width="37" height="18"
+                                                                        loading="lazy" />
+                                                                    <img class="img-fluid"
+                                                                        src="{{ env('COMMON_HOST') . 'assets/frontend/img/icon-p-mc.svg' }}"
+                                                                        alt="Icon" width="30" height="18"
+                                                                        loading="lazy" />
+                                                                    <img class="img-fluid"
+                                                                        src="{{ env('COMMON_HOST') . 'assets/frontend/img/icon-p-amx.svg' }}"
+                                                                        alt="Icon" width="40" height="18"
+                                                                        loading="lazy" />
                                                                 </div>
                                                             </label>
                                                         </div>
-                                                        <div id="card-fields" class="payment_gateway_fields active" style="display: block;">
+                                                        <div id="card-fields" class="payment_gateway_fields active"
+                                                            style="display: block;">
                                                             <div class="row">
                                                                 <div class="col-md-12 form-group pb-25">
-                                                                    <label for="card_number" class="form-label">Card Number</label>
-                                                                    <input type="text" class="form-control font-size-sm" id="card_number" name="card_number" placeholder="" required="">
+                                                                    <label for="card_number" class="form-label">Card
+                                                                        Number</label>
+                                                                    <input type="text" class="form-control font-size-sm"
+                                                                        id="card_number" name="card_number"
+                                                                        placeholder="" required="">
                                                                     <div class="invalid-feedback">
                                                                         Please enter a valid card number.
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-4 form-group pb-25">
-                                                                    <label for="expiry_month" class="form-label">Expiry Month</label>
-                                                                    <input type="text" class="form-control font-size-sm" id="expiry_month" name="expiry_month" placeholder="" required="">
+                                                                    <label for="expiry_month" class="form-label">Expiry
+                                                                        Month</label>
+                                                                    <input type="text" class="form-control font-size-sm"
+                                                                        id="expiry_month" name="expiry_month"
+                                                                        placeholder="" required="">
                                                                     <div class="invalid-feedback">
                                                                         Please enter a valid expiry month.
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-4 form-group pb-25">
-                                                                    <label for="expiry_year" class="form-label">Expiry Year</label>
-                                                                    <input type="text" class="form-control font-size-sm" id="expiry_year" name="expiry_year" placeholder="" required="">
+                                                                    <label for="expiry_year" class="form-label">Expiry
+                                                                        Year</label>
+                                                                    <input type="text" class="form-control font-size-sm"
+                                                                        id="expiry_year" name="expiry_year"
+                                                                        placeholder="" required="">
                                                                     <div class="invalid-feedback">
                                                                         Please enter a valid expiry year.
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-4 form-group pb-25">
-                                                                    <label for="security_code" class="form-label">Security Code</label>
-                                                                    <input type="text" class="form-control font-size-sm" id="security_code" name="security_code" placeholder="" required="">
+                                                                    <label for="security_code"
+                                                                        class="form-label">Security Code</label>
+                                                                    <input type="text" class="form-control font-size-sm"
+                                                                        id="security_code" name="security_code"
+                                                                        placeholder="" required="">
                                                                     <div class="invalid-feedback">
                                                                         Please enter a valid security code.
                                                                     </div>
@@ -136,19 +173,28 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="form-check d-flex align-items-center justify-content-between w-100 payment_gateway py-3 border-bottom g-12">
-                                                        <input type="radio" class="form-check-input radio font-size-sm payment-method" id="payment_gateway-2" name="payment_gateway" value="stripe" placeholder="" required="">
-                                                        <label for="payment_gateway-2" class="form-check-label w-100 d-flex align-items-center justify-content-between m-0">
+                                                    <div
+                                                        class="form-check d-flex align-items-center justify-content-between w-100 payment_gateway py-3 border-bottom g-12">
+                                                        <input type="radio"
+                                                            class="form-check-input radio font-size-sm payment-method"
+                                                            id="payment_gateway-2" name="payment_gateway" value="stripe"
+                                                            placeholder="" required="">
+                                                        <label for="payment_gateway-2"
+                                                            class="form-check-label w-100 d-flex align-items-center justify-content-between m-0">
                                                             <span>Stripe</span>
-                                                            <div class="images d-flex align-items-center justify-content-end g-6">
-                                                                <img class="img-fluid" src="" alt="Icon" width="45" height="18" loading="lazy" />
+                                                            <div
+                                                                class="images d-flex align-items-center justify-content-end g-6">
+                                                                <img class="img-fluid" src="" alt="Icon" width="45"
+                                                                    height="18" loading="lazy" />
                                                             </div>
                                                         </label>
                                                     </div>
-                                                    <div id="stripe-fields" class="payment-method-fields active" style="display: none;">
+                                                    <div id="stripe-fields" class="payment-method-fields active"
+                                                        style="display: none;">
                                                         <div class="row">
                                                             <div class="col-md-12 form-group pb-25">
-                                                                <label for="card-element" class="form-label">Card Details</label>
+                                                                <label for="card-element" class="form-label">Card
+                                                                    Details</label>
                                                                 <div id="card-element" class="form-control"></div>
                                                                 <div id="card-errors" role="alert"></div>
                                                             </div>
@@ -160,7 +206,8 @@
                                             <!-- <button class="btn-submit w-100 btn btn-primary-app font-size-sm" type="submit" fdprocessedid="xaduq">Continue</button> -->
                                         </div>
                                     </form>
-                                    <p class="text-center color-gray-app pt-3 m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec erat a metus interdum</p>
+                                    <p class="text-center color-gray-app pt-3 m-0">Lorem ipsum dolor sit amet,
+                                        consectetur adipiscing elit. Sed nec erat a metus interdum</p>
                                 </div>
                             </div>
                         </div>
@@ -171,16 +218,26 @@
                                     <p class="fw-medium mb-4 pb-1">Billing Cycle:</p>
                                     <div class="form-group mb-4 border-bottom">
                                         <div class="billing_cycles">
-                                            <div class="form-check d-flex align-items-center justify-content-between w-100 billing_cycle pb-3 g-12">
-                                                <input type="radio" class="form-check-input radio font-size-sm" id="billing_cycle-1" name="billing_cycle" placeholder="" required="" value="monthly" {{$page['data']['attempt_package_type'] == 'monthly' ? 'checked' : ''}}>
-                                                <label for="billing_cycle-1" class="form-check-label w-100 d-flex align-items-center justify-content-between m-0">
+                                            <div
+                                                class="form-check d-flex align-items-center justify-content-between w-100 billing_cycle pb-3 g-12">
+                                                <input type="radio" class="form-check-input radio font-size-sm"
+                                                    id="billing_cycle-1" name="billing_cycle" placeholder="" required=""
+                                                    value="monthly" {{$page['data']['attempt_package_type']=='monthly'
+                                                    ? 'checked' : '' }}>
+                                                <label for="billing_cycle-1"
+                                                    class="form-check-label w-100 d-flex align-items-center justify-content-between m-0">
                                                     <span>Monthly</span>
                                                     <span>AED {{$page['package']['monthly_price']}}/m</span>
                                                 </label>
                                             </div>
-                                            <div class="form-check d-flex align-items-center justify-content-between w-100 billing_cycle pb-3 g-12">
-                                                <input type="radio" class="form-check-input radio font-size-sm" id="billing_cycle-2" name="billing_cycle" placeholder="" required="" value="yearly" {{$page['data']['attempt_package_type'] == 'yearly' ? 'checked' : ''}}>
-                                                <label for="billing_cycle-2" class="form-check-label w-100 d-flex align-items-center justify-content-between m-0">
+                                            <div
+                                                class="form-check d-flex align-items-center justify-content-between w-100 billing_cycle pb-3 g-12">
+                                                <input type="radio" class="form-check-input radio font-size-sm"
+                                                    id="billing_cycle-2" name="billing_cycle" placeholder="" required=""
+                                                    value="yearly" {{$page['data']['attempt_package_type']=='yearly'
+                                                    ? 'checked' : '' }}>
+                                                <label for="billing_cycle-2"
+                                                    class="form-check-label w-100 d-flex align-items-center justify-content-between m-0">
                                                     <span>Yearly</span>
                                                     <span>AED {{$page['package']['yearly_price']}}/y</span>
                                                 </label>
@@ -191,51 +248,62 @@
                                     <p class="fw-medium mb-4 pb-1">Monthly Subscription</p>
                                     <div class="mb-2 border-bottom">
                                         <div class="subtotal">
-                                            <label for="subtotal-1" class="form-check-label w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
+                                            <label for="subtotal-1"
+                                                class="form-check-label w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
                                                 <span>Price</span>
-                                                <span id="price-value">AED {{$page['package']['monthly_price']}}/month</span>
+                                                <span id="price-value">AED
+                                                    {{$page['package']['monthly_price']}}/month</span>
                                             </label>
-                                            <label for="subtotal-2" class="form-check-label w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
+                                            <label for="subtotal-2"
+                                                class="form-check-label w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
                                                 <span>VAT</span>
                                                 <span id="vat-value">AED {{$page['vat']}}/month</span>
                                             </label>
                                         </div>
                                     </div>
-                                     @php
-                                        $total = $page['package']['monthly_price'] + $page['vat'];
-                                     @endphp
+                                    @php
+                                    $total = $page['package']['monthly_price'] + $page['vat'];
+                                    @endphp
                                     @else
                                     <p class="fw-medium mb-4 pb-1">Yearly Subscription</p>
                                     <div class="mb-2 border-bottom">
                                         <div class="subtotal">
-                                            <label for="subtotal-1" class="form-check-label w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
+                                            <label for="subtotal-1"
+                                                class="form-check-label w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
                                                 <span>Price</span>
-                                                <span id="price-value">AED {{$page['package']['yearly_price']}}/year</span>
+                                                <span id="price-value">AED
+                                                    {{$page['package']['yearly_price']}}/year</span>
                                             </label>
-                                            <label for="subtotal-2" class="form-check-label w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
+                                            <label for="subtotal-2"
+                                                class="form-check-label w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
                                                 <span>VAT</span>
                                                 <span id="vat-value">AED {{$page['vat']}}/year</span>
                                             </label>
                                         </div>
                                     </div>
                                     @php
-                                        $total = $page['package']['yearly_price'] + $page['vat'];
-                                     @endphp
+                                    $total = $page['package']['yearly_price'] + $page['vat'];
+                                    @endphp
                                     @endif
 
 
                                     <div class="border-bottom">
                                         <div class="total">
-                                            <label for="total-1" class="form-check-label fw-semibold w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
+                                            <label for="total-1"
+                                                class="form-check-label fw-semibold w-100 d-flex align-items-center justify-content-between w-100 pb-3 m-0 g-12">
                                                 <span>Total</span>
-                                                <span id="total-value">AED {{ number_format($total,2) }} /{{ $page['data']['attempt_package_type'] == 'monthly' ? 'month' : 'year' }}</span>
+                                                <span id="total-value">AED {{ number_format($total,2) }} /{{
+                                                    $page['data']['attempt_package_type'] == 'monthly' ? 'month' :
+                                                    'year' }}</span>
                                             </label>
                                         </div>
                                     </div>
 
-                                    <p class="text-center color-gray-app pt-5 pb-4 mb-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec erat a metus interdum</p>
+                                    <p class="text-center color-gray-app pt-5 pb-4 mb-1">Lorem ipsum dolor sit amet,
+                                        consectetur adipiscing elit. Sed nec erat a metus interdum</p>
 
-                                    <a href="" type="button" class="btn btn-primary-app w-100 disabled1" id="complete-order">Complete Order</a>
+                                    <a href="" type="button" class="btn btn-primary-app w-100 disabled1"
+                                        id="complete-order">Complete Order</a>
                                 </div>
                             </div>
                         </div>
@@ -324,12 +392,7 @@
                 e.preventDefault();
 
         
-
-            // Validate form
-            if (!form.checkValidity()) {
-                form.classList.add('was-validated');
-                return;
-            }
+           
             
             // Disable button to prevent multiple submissions
             completeOrderBtn.disabled = true;
@@ -338,7 +401,56 @@
             // Get billing cycle and payment method
             const billingCycle = document.querySelector('input[name="billing_cycle"]:checked')?.value;
                     const paymentMethod = document.querySelector('input[name="payment_gateway"]:checked')?.value;
+            // Reset validation
+                    form.classList.remove('was-validated');
+                    
+                    // Validate common fields (name, address, etc.)
+                    let isValid = true;
+                    const commonFields = ['name', 'company_name', 'country', 'address', 'city', 'zip_code', 'trn_number'];
+                    
+                    commonFields.forEach(fieldId => {
+                        const field = document.getElementById(fieldId);
+                        if (!field.checkValidity()) {
+                            field.classList.add('is-invalid');
+                            isValid = false;
+                        } else {
+                            field.classList.remove('is-invalid');
+                        }
+                    });
 
+                    // Validate payment method specific fields
+                    if (paymentMethod === 'card') {
+                        const cardFields = ['card_number', 'expiry_month', 'expiry_year', 'security_code'];
+                        cardFields.forEach(fieldId => {
+                            const field = document.getElementById(fieldId);
+                            if (!field.checkValidity()) {
+                                field.classList.add('is-invalid');
+                                isValid = false;
+                            } else {
+                                field.classList.remove('is-invalid');
+                            }
+                        });
+                    } else if (paymentMethod === 'stripe') {
+                        // For Stripe Elements, we only need to validate the card element
+                        const {error} = await stripe.createPaymentMethod({
+                            type: 'card',
+                            card: cardElement
+                        });
+                        
+                        if (error) {
+                            document.getElementById('card-errors').textContent = error.message;
+                            isValid = false;
+                        } else {
+                            document.getElementById('card-errors').textContent = '';
+                        }
+                    }
+                    // Validate form
+                    if (!isValid) {
+                        form.classList.add('was-validated');
+                        completeOrderBtn.disabled = false;
+                        completeOrderBtn.textContent = 'Complete Order';
+                        return;
+                    }
                     if (!billingCycle || !paymentMethod) {
                         alert("Please select billing cycle and payment method");
                         return;
@@ -361,7 +473,7 @@
                     trn_number: document.getElementById('trn_number').value,
                     security_code : document.getElementById('security_code').value
                 };
-                // console.log(paymentData);
+                console.log(paymentData);
                 let response;
                 if (paymentMethod === 'card') {
                     // Direct card payment
@@ -379,69 +491,57 @@
                         },
                         body: JSON.stringify(paymentData)
                     });
-                } else {
-                    // Stripe Elements payment
-                    const { paymentMethod, error } = await stripe.createPaymentMethod({
-                        type: 'card',
-                        card: cardElement,
-                        billing_details: {
-                            name: paymentData.name,
-                            address: {
-                                line1: paymentData.address,
-                                city: paymentData.city,
-                                postal_code: paymentData.zip_code,
-                                country: paymentData.country
-                            }
-                        }
-                    });
-
-                    if (error) {
-                        throw error;
+                } else if (paymentMethod === 'stripe') {
+            const { paymentMethod: stripePaymentMethod, error: pmError } = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+                billing_details: {
+                    name: paymentData.name,
+                    address: {
+                        line1: paymentData.address,
+                        city: paymentData.city,
+                        postal_code: paymentData.zip_code,
+                        country: paymentData.country.toUpperCase().slice(0, 2)
                     }
-
-                    paymentData.payment_method_id = paymentMethod.id;
-
-                    response = await fetch("{{ route('process-stripe-payment') }}", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                        },
-                        body: JSON.stringify(paymentData)
-                    });
                 }
+            });
 
-                // Handle response
-                const contentType = response.headers.get('content-type');
-                if (!contentType || !contentType.includes('application/json')) {
-                    const text = await response.text();
-                    
-                    // Check for common error pages
-                    if (text.includes('Sfdump') || text.includes('<html')) {
-                        throw new Error('Server encountered an error. Please try again later.');
-                    }
-                    throw new Error(`Unexpected response: ${text.substring(0, 100)}...`);
-                }
+            if (pmError) throw pmError;
 
-                const data = await response.json();
+            paymentData.payment_method_id = stripePaymentMethod.id;
 
-                if (!response.ok) {
-                    throw new Error(data.error || 'Payment failed');
-                }
+            response = await fetch("{{ route('process-stripe-payment') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                },
+                body: JSON.stringify(paymentData)
+            });
 
-                if (data.requires_action) {
-                    const { error: confirmError } = await stripe.confirmCardPayment(data.client_secret);
-                    if (confirmError) throw confirmError;
-                }
+            // Handle response properly
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Payment failed');
+            }
 
-                if (data.success) {
-                    window.location.href = data.redirect_url || 
-                        `/checkout/success/${encodeURIComponent(data.transaction_id)}`;
-                    return;
-                }
+            const data = await response.json();
 
-                throw new Error('Unexpected response');
+            if (data.requires_action) {
+                const { error: confirmError } = await stripe.confirmCardPayment(data.client_secret, {
+                    payment_method: stripePaymentMethod.id,
+                    return_url: paymentData.return_url
+                });
+
+                if (confirmError) throw confirmError;
+            } else if (data.success) {
+                window.location.href = data.redirect_url || paymentData.return_url;
+            } else {
+                throw new Error(data.error || 'Payment failed');
+            }
+        }
+            
               
             }catch(error){
                 console.log(error);
