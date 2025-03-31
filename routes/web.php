@@ -182,7 +182,7 @@ Route::group(['prefix' => ''], function () {
         Route::post('/start-checkout', [HomeController::class, 'start_checkout'])->name('start-checkout');
         Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
         Route::post('/process-card-payment', [HomeController::class, 'processCardPayment'])->name('process-card-payment');
-        Route::post('/process-stripe-payment', [PaymentController::class, 'processStripePayment'])->name('process-stripe-payment');
+        Route::post('/process-stripe-payment', [HomeController::class, 'processStripePayment'])->name('process-stripe-payment');
         Route::get('/checkout/success/{transaction_id}', [HomeController::class, 'checkoutSuccess'])->name('checkout-success');
     }); 
     Route::post('/setup-submit', [HomeController::class, 'setupSubmit'])->name('setup-submit');
