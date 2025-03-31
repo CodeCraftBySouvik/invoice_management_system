@@ -115,7 +115,7 @@ class HomeController extends Controller
             'card_number' => 'required|string',
             'expiry_month' => 'required|numeric|between:1,12',
             'expiry_year' => 'required|numeric|min:' . date('Y'),
-            'cvc' => 'required|numeric|digits_between:3,4',
+            'security_code' => 'required|numeric|digits_between:3,4',
         ]);
         Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
         try {
@@ -126,21 +126,141 @@ class HomeController extends Controller
                     'number' => str_replace(' ', '', $request->card_number),
                     'exp_month' => $request->expiry_month,
                     'exp_year' => $request->expiry_year,
-                    'cvc' => $request->cvc,
+                    'cvc' => $request->security_code,
                 ],
             ]);
-        }catch(error){
+            // Create payment intent
+            $paymentIntent = PaymentIntent::create([
+                'amount' => $request->amount,
+                'currency' => 'aed',
+                'payment_method' => $paymentMethod->id,
+                'confirm' => true,
+                'metadata' => [
+                    'user_id' => Auth::id(),
+                    'package_id' => $request->package_id,
+                    'billing_cycle' => $request->billing_cycle,
+                ],
+                'description' => 'Subscription payment for package #' . $request->package_id,
+            ]); 
+            // Update transaction
+            $transaction = Transaction::where('user_id', Auth::id())
+                ->where('package_id', $request->package_id)
+                ->whereNull('purchase_date_time')
+                ->latest()
+                ->first();
 
+                if ($paymentIntent->status === 'succeeded') {
+                    $transaction->update([
+                        'purchase_package_type' => $request->billing_cycle,
+                        'purchase_package_amount' => $request->amount / 100,
+                        'purchase_date_time' => now(),
+                        'status' => 'completed',
+                        'stripe_payment_intent_id' => $paymentIntent->id,
+                    ]);
+    
+                    return response()->json([
+                        'success' => true,
+                        'transaction_id' => $transaction->id,
+                        'redirect_url' => route('checkout-success', ['transaction_id' => $transaction->id])
+                    ]);
+                } else {
+                    return response()->json([
+                        'error' => 'Payment processing failed. Please try again.'
+                    ], 400);
+                }
+
+
+            } catch (\Stripe\Exception\CardException $e) {
+                return response()->json([
+                    'error' => $e->getError()->message
+                ], 400);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'error' => 'Payment processing failed. Please try again.'
+                ], 500);
+            }
+    }
+
+    public function processStripePayment(Request $request)
+    {
+        $request->validate([
+            'amount' => 'required|numeric',
+            'package_id' => 'required|exists:packages,id',
+            'billing_cycle' => 'required|in:monthly,yearly',
+            'payment_method_id' => 'required|string',
+        ]);
+
+        Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+
+        try {
+            // Create payment intent
+            $paymentIntent = PaymentIntent::create([
+                'amount' => $request->amount,
+                'currency' => 'aed',
+                'payment_method' => $request->payment_method_id,
+                'confirmation_method' => 'manual',
+                'confirm' => true,
+                'metadata' => [
+                    'user_id' => Auth::id(),
+                    'package_id' => $request->package_id,
+                    'billing_cycle' => $request->billing_cycle,
+                ],
+                'description' => 'Subscription payment for package #' . $request->package_id,
+                'use_stripe_sdk' => true,
+            ]);
+
+            // Update transaction
+            $transaction = Transaction::where('user_id', Auth::id())
+                ->where('package_id', $request->package_id)
+                ->whereNull('purchase_date_time')
+                ->latest()
+                ->first();
+
+            $transaction->update([
+                'stripe_payment_intent_id' => $paymentIntent->id,
+            ]);
+
+            if ($paymentIntent->status === 'requires_action') {
+                return response()->json([
+                    'requires_action' => true,
+                    'client_secret' => $paymentIntent->client_secret
+                ]);
+            } else if ($paymentIntent->status === 'succeeded') {
+                $transaction->update([
+                    'purchase_package_type' => $request->billing_cycle,
+                    'purchase_package_amount' => $request->amount / 100,
+                    'purchase_date_time' => now(),
+                    'status' => 'completed',
+                ]);
+
+                return response()->json([
+                    'success' => true,
+                    'transaction_id' => $transaction->id,
+                    'redirect_url' => route('checkout-success', ['transaction_id' => $transaction->id])
+                ]);
+            } else {
+                return response()->json([
+                    'error' => 'Payment processing failed. Please try again.'
+                ], 400);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 
-    public function checkoutSuccess() {
-        $page = [
-            'term' => 'Checkout Success'
-        ];
-        
+    public function checkoutSuccess(Request $request)
+    {
+        $transaction = Transaction::with('package')
+            ->where('id', $request->transaction_id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
 
-        return view('frontend.checkout-success', compact('page'));
+        return view('frontend.checkout-success', [
+            'transaction' => $transaction,
+            'package' => $transaction->package,
+        ]);
     }
 
     public function setup() {

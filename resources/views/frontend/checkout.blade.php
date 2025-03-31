@@ -374,6 +374,7 @@
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
+                            'Accept': 'application/json',
                             'X-CSRF-TOKEN': "{{ csrf_token() }}"
                         },
                         body: JSON.stringify(paymentData)
@@ -395,7 +396,7 @@
                     });
 
                     if (error) {
-                        throw new Error(error.message);
+                        throw error;
                     }
 
                     paymentData.payment_method_id = paymentMethod.id;
@@ -404,21 +405,51 @@
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
                         },
                         body: JSON.stringify(paymentData)
                     });
                 }
+
+                // Handle response
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const text = await response.text();
+                    
+                    // Check for common error pages
+                    if (text.includes('Sfdump') || text.includes('<html')) {
+                        throw new Error('Server encountered an error. Please try again later.');
+                    }
+                    throw new Error(`Unexpected response: ${text.substring(0, 100)}...`);
+                }
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Payment failed');
+                }
+
+                if (data.requires_action) {
+                    const { error: confirmError } = await stripe.confirmCardPayment(data.client_secret);
+                    if (confirmError) throw confirmError;
+                }
+
+                if (data.success) {
+                    window.location.href = data.redirect_url || 
+                        `/checkout/success/${encodeURIComponent(data.transaction_id)}`;
+                    return;
+                }
+
+                throw new Error('Unexpected response');
               
             }catch(error){
-                alert(error);
+                console.log(error);
             }
 
             });
     }); 
 </script>
-<script>
-    
-</script>
+
 
 @endsection

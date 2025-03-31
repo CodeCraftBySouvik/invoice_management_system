@@ -18,10 +18,10 @@
                 <p class="text-body-emphasis mb-5">Let's proceed to setup company and <br>other information</p>
 
                 <div class="">
-                    <a href="{{ config('app.main_front_url') }}/setup" type="button" class="btn btn-primary-app mx-auto btn-350 mb-3">Proceed Now</a>
+                    <a href="" type="button" class="btn btn-primary-app mx-auto btn-350 mb-3">Proceed Now</a>
                 </div>
                 <div class="">
-                    <a href="{{ config('app.main_url') }}/dashboard" type="button" class="text-body-tertiary text-decoration-underline">Skip</a>
+                    <a href="" type="button" class="text-body-tertiary text-decoration-underline">Skip</a>
                 </div>
             </div>
         </div>
