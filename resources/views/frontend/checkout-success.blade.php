@@ -18,7 +18,7 @@
                 <p class="text-body-emphasis mb-5">Let's proceed to setup company and <br>other information</p>
 
                 <div class="">
-                    <a href="" type="button" class="btn btn-primary-app mx-auto btn-350 mb-3">Proceed Now</a>
+                    <a href="{{route('setup')}}" type="button" class="btn btn-primary-app mx-auto btn-350 mb-3">Proceed Now</a>
                 </div>
                 <div class="">
                     <a href="" type="button" class="text-body-tertiary text-decoration-underline">Skip</a>

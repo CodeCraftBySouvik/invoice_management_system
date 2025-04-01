@@ -323,8 +323,21 @@ class HomeController extends Controller
     
             $data->save();
             DB::commit(); // Commit transaction
+
+            // Check if user has any completed transactions
+            $hasPaidSubscription = Transaction::where('user_id', Auth::id())
+            ->where('status', 'completed')
+            ->exists();
+
+
     
-            return redirect()->route('free-trial-dashboard')->with('success', 'Company setup completed!');
+             // Redirect based on payment status
+            if ($hasPaidSubscription) {
+                return redirect()->route('admin.dashboard')->with('success', 'Company setup completed!');
+            } else {
+                return redirect()->route('free-trial-dashboard')->with('success', 'Company setup completed!');
+            }
+
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollBack(); // Rollback transaction in case of failure
@@ -340,6 +353,14 @@ class HomeController extends Controller
         // fetch the logged in user's company data
         $userCompanyData = UserCompaniesData::where('user_id', Auth::id())->first();
         return view('admin.free.dashboard',compact('page','userCompanyData'));
+    }
+
+    public function UpgradeDashboard(){
+        $page = [
+            'term' => 'Upgrade Dashboard'
+        ];
+
+        return view('admin.dashboard',compact('page'));
     }
     
 }

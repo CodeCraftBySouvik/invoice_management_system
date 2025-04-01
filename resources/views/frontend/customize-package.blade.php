@@ -39,14 +39,14 @@
 
                             <!--Monthly Price -->
                             <div class="mb-3">
-                                <label class="form-label">Price(Monthly) <small>(Leave empty for custom pricing)</small></label>
+                                <label class="form-label">Price(Monthly) </label>
                                 <input type="number" name="monthly_price" class="form-control"  value="{{ old('monthly_price') }}" placeholder="Enter price">
                                 @error('monthly_price') <p class="text-danger">{{ $message }}</p> @enderror
                             </div>
 
                             {{-- Yearly Yrice --}}
                             <div class="mb-3">
-                                <label class="form-label">Price(Yearly) <small>(Leave empty for custom pricing)</small></label>
+                                <label class="form-label">Price(Yearly) </label>
                                 <input type="number" name="yearly_price" class="form-control"  value="{{ old('yearly_price') }}" placeholder="Enter price">
                                 @error('yearly_price') <p class="text-danger">{{ $message }}</p> @enderror
                             </div>
